@@ -1,24 +1,31 @@
 package com.jummania.analogue_watch
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.TypedValue
 import android.widget.RelativeLayout
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.divider.MaterialDivider
 import com.jummania.analogue_watch.databinding.ActivityMainBinding
 import java.util.Calendar
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.apply {
+
+            val typedValue = TypedValue()
+            theme.resolveAttribute(android.R.attr.colorSecondary, typedValue, true)
+            val color = ContextCompat.getColor(this@MainActivity, typedValue.resourceId)
 
             for (i in 1..12) {
                 val divider = MaterialDivider(this@MainActivity)
@@ -28,10 +35,11 @@ class MainActivity : AppCompatActivity() {
                 )
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
                 divider.layoutParams = layoutParams
-                divider.dividerColor = Color.BLACK
+                divider.dividerColor = color
                 divider.rotation = 30f * i
                 mainCircle.addView(divider)
             }
+
 
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed(object : Runnable {
