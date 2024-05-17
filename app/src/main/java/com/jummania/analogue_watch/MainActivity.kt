@@ -15,6 +15,9 @@ import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
+    private val handler = Handler(Looper.getMainLooper())
+    private var runnable: Runnable? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,9 +43,7 @@ class MainActivity : AppCompatActivity() {
                 mainCircle.addView(divider)
             }
 
-
-            val handler = Handler(Looper.getMainLooper())
-            handler.postDelayed(object : Runnable {
+            runnable = object : Runnable {
                 override fun run() {
                     val calendar = Calendar.getInstance()
                     val seconds = calendar.get(Calendar.SECOND)
@@ -54,8 +55,20 @@ class MainActivity : AppCompatActivity() {
 
                     handler.postDelayed(this, 1000)
                 }
-            }, 0)
+            }
+
+            runnable?.let { handler.post(it) }
 
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        runnable?.let { handler.post(it) }
     }
 }
