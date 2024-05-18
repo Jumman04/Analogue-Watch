@@ -19,7 +19,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val version = preferenceScreen.findPreference<Preference>("version")
         version?.title = "Version: ${getString(R.string.versionName)}"
 
-
         setHasOptionsMenu(true)
         (activity as AppCompatActivity?)?.supportActionBar?.let {
             it.title = "Settings"
@@ -33,7 +32,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        when(preference.key){
+        when (preference.key) {
             "theme" -> {
                 val themes = resources.getStringArray(R.array.themes)
                 var position = themes.indexOf(
@@ -93,7 +92,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun showMessage(message: String) {
-        Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun changeTheme(theme: String) {

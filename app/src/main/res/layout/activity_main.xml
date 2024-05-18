@@ -17,20 +17,20 @@
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name"
             app:menu="@menu/menu"
+            app:title="@string/app_name"
             app:titleTextColor="?android:textColorPrimary" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
+        android:name="com.jummania.analogue_watch.WatchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.jummania.analogue_watch.WatchFragment"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
