@@ -1,6 +1,8 @@
 package com.jummania.analogue_watch
 
+import android.graphics.Color
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -52,9 +54,13 @@ class MainActivity : AppCompatActivity() {
 
             runnable?.let { handler.post(it) }
 
-            val typedValue = TypedValue()
-            theme.resolveAttribute(android.R.attr.colorSecondary, typedValue, true)
-            val color = ContextCompat.getColor(this@MainActivity, typedValue.resourceId)
+
+            var color = Color.BLACK
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                val typedValue = TypedValue()
+                theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
+                color = ContextCompat.getColor(this@MainActivity, typedValue.resourceId)
+            }
 
             for (i in 1..12) {
                 val divider = MaterialDivider(this@MainActivity)

@@ -4,6 +4,5 @@
     <stroke
         android:width="4dp"
         android:color="?android:textColorPrimary" />
-    <solid
-        android:color="?android:textColorPrimaryInverse"/>
+    <solid android:color="?android:textColorPrimaryInverse" />
 </shape>
