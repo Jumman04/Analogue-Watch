@@ -1,5 +1,6 @@
 package com.jummania.analogue_watch
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,6 +27,30 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
 
+            val tik1 = MediaPlayer.create(this@MainActivity, R.raw.tik1)
+            val tik2 = MediaPlayer.create(this@MainActivity, R.raw.tik2)
+
+            runnable = object : Runnable {
+                override fun run() {
+
+                    val calendar = Calendar.getInstance()
+                    val seconds = calendar.get(Calendar.SECOND)
+                    val minutes = calendar.get(Calendar.MINUTE)
+
+                    if (seconds % 2 == 0) {
+                        if (!tik2.isPlaying) tik2.start()
+                    } else if (!tik1.isPlaying) tik1.start()
+
+                    second.rotation = seconds * 6f
+                    minute.rotation = (minutes + seconds / 60.0f) * 6f
+                    hour.rotation = (calendar.get(Calendar.HOUR) + minutes / 60.0f) * 30f
+
+                    handler.postDelayed(this, 1000)
+                }
+            }
+
+            runnable?.let { handler.post(it) }
+
             val typedValue = TypedValue()
             theme.resolveAttribute(android.R.attr.colorSecondary, typedValue, true)
             val color = ContextCompat.getColor(this@MainActivity, typedValue.resourceId)
@@ -42,22 +67,6 @@ class MainActivity : AppCompatActivity() {
                 divider.rotation = 30f * i
                 mainCircle.addView(divider)
             }
-
-            runnable = object : Runnable {
-                override fun run() {
-                    val calendar = Calendar.getInstance()
-                    val seconds = calendar.get(Calendar.SECOND)
-                    val minutes = calendar.get(Calendar.MINUTE)
-
-                    second.rotation = seconds * 6f
-                    minute.rotation = (minutes + seconds / 60.0f) * 6f
-                    hour.rotation = (calendar.get(Calendar.HOUR) + minutes / 60.0f) * 30f
-
-                    handler.postDelayed(this, 1000)
-                }
-            }
-
-            runnable?.let { handler.post(it) }
 
         }
     }

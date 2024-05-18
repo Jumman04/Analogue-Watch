@@ -57,7 +57,7 @@
             <LinearLayout
                 android:id="@+id/minute"
                 android:layout_width="6dp"
-                android:layout_height="244dp"
+                android:layout_height="233dp"
                 android:layout_centerInParent="true"
                 android:elevation="6dp"
                 android:orientation="vertical"
