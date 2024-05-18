@@ -16,4 +16,5 @@
     <string name="markers">Clock Markers</string>
     <string name="hour_markers_title">Hour Markers</string>
     <string name="minute_markers_title">Minute Markers</string>
+    <string name="settings">Settings</string>
 </resources>
