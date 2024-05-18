@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Analogue Watch</string>
+
+    <string-array name="themes">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System default</item>
+    </string-array>
+
+    <string name="clock_hands_title">Clock Hands</string>
+    <string name="hour_hand_title">Hour Hand</string>
+    <string name="minute_hand_title">Minute Hand</string>
+    <string name="second_hand_title">Second Hand</string>
+
+    <string name="clock_display_title">Clock Display</string>
+    <string name="markers">Clock Markers</string>
+    <string name="hour_markers_title">Hour Markers</string>
+    <string name="minute_markers_title">Minute Markers</string>
+    <string name="second_markers_title">Second Markers</string>
 </resources>

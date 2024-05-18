@@ -1,0 +1,104 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="General">
+
+        <Preference
+            android:defaultValue="System default"
+            android:key="theme"
+            android:title="Choose theme"
+            app:summary="Tap to switch to Dark/Light Mode"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            app:key="clear"
+            app:summary="Clear app data and history for free up space."
+            app:title="Cache and history"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/clock_hands_title">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="secondHand"
+            app:title="@string/second_hand_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="minuteHand"
+            app:title="@string/minute_hand_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="hourHand"
+            app:title="@string/hour_hand_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/clock_display_title">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="clockMarker"
+            app:title="@string/markers" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:dependency="clockMarker"
+            app:key="hourMarker"
+            app:title="@string/hour_markers_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:dependency="clockMarker"
+            app:key="minuteMarker"
+            app:title="@string/minute_markers_title" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory app:title="Clock Sound">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="sound"
+            app:title="Clock Sound" />
+
+        <SeekBarPreference
+            android:defaultValue="1"
+            android:max="10"
+            app:dependency="sound"
+            app:key="volume"
+            app:title="Sound Volume" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="About">
+
+        <Preference
+            app:key="website"
+            app:title="Website"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            app:key="more"
+            app:title="More apps"
+            app:useSimpleSummaryProvider="true" />
+
+
+        <Preference
+            app:key="website"
+            app:title="About Developers"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            app:enabled="false"
+            app:key="version"
+            app:title="@string/versionName"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

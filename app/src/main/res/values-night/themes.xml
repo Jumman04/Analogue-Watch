@@ -1,7 +1,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.AnalogueWatch" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="red">@android:color/holo_red_light</item>
     </style>
 </resources>
