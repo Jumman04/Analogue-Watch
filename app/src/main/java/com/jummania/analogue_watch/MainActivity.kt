@@ -37,9 +37,10 @@ class MainActivity : AppCompatActivity() {
                     val seconds = calendar.get(Calendar.SECOND)
                     val minutes = calendar.get(Calendar.MINUTE)
 
-                    if (seconds % 2 == 0) {
-                        if (!tik2.isPlaying) tik2.start()
-                    } else if (!tik1.isPlaying) tik1.start()
+                    if (!tik1.isPlaying && !tik2.isPlaying) {
+                        if (seconds % 2 == 0) tik2.start()
+                        else tik1.start()
+                    }
 
                     second.rotation = seconds * 6f
                     minute.rotation = (minutes + seconds / 60.0f) * 6f
