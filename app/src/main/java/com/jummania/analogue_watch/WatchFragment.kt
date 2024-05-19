@@ -87,29 +87,31 @@ class WatchFragment : Fragment() {
                 val hourMarker = getBoolean("hourMarker")
                 val minuteMarker = getBoolean("minuteMarker")
 
-                for (i in 1..60) {
-                    val divider = LinearLayout(requireContext())
+                if (hourMarker || minuteMarker) {
+                    for (i in 1..60) {
+                        val divider = LinearLayout(requireContext())
 
-                    divider.layoutParams = layoutParams
-                    divider.weightSum = 2f
-                    divider.rotation = 6f * i
-                    divider.orientation = LinearLayout.VERTICAL
+                        divider.layoutParams = layoutParams
+                        divider.weightSum = 2f
+                        divider.rotation = 6f * i
+                        divider.orientation = LinearLayout.VERTICAL
 
-                    val firstLinearLayout = getLayout()
-                    val secondLinearLayout = getLayout()
+                        val firstLinearLayout = getLayout()
+                        val secondLinearLayout = getLayout()
 
-                    if (i % 5 == 0 && hourMarker) {
-                        firstLinearLayout.setBackgroundColor(redColor)
-                        setWeight(firstLinearLayout, secondLinearLayout, 0.2f, 0.8f)
-                    } else if (minuteMarker) {
-                        firstLinearLayout.setBackgroundColor(color)
-                        setWeight(firstLinearLayout, secondLinearLayout, 0.1f, 0.9f)
+                        if (i % 5 == 0 && hourMarker) {
+                            firstLinearLayout.setBackgroundColor(redColor)
+                            setWeight(firstLinearLayout, secondLinearLayout, 0.2f, 0.8f)
+                        } else if (minuteMarker) {
+                            firstLinearLayout.setBackgroundColor(color)
+                            setWeight(firstLinearLayout, secondLinearLayout, 0.1f, 0.9f)
+                        }
+
+                        divider.addView(firstLinearLayout)
+                        divider.addView(secondLinearLayout)
+
+                        mainCircle.addView(divider)
                     }
-
-                    divider.addView(firstLinearLayout)
-                    divider.addView(secondLinearLayout)
-
-                    mainCircle.addView(divider)
                 }
             }
         }
@@ -123,7 +125,7 @@ class WatchFragment : Fragment() {
 
     private fun getMediaPlayer(@RawRes res: Int): MediaPlayer {
         return MediaPlayer.create(requireContext(), res).also {
-            val volume = preferenceManager.getInt("volume", 0.1f.toInt()) / 10f
+            val volume = preferenceManager.getInt("volume", 1) / 10f
             it.setVolume(volume, volume)
         }
     }

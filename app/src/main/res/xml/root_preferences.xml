@@ -10,12 +10,6 @@
             app:summary="Tap to switch to Dark/Light Mode"
             app:useSimpleSummaryProvider="true" />
 
-        <Preference
-            app:key="clear"
-            app:summary="Clear app data and history for free up space."
-            app:title="Cache and history"
-            app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/clock_hands_title">
@@ -58,7 +52,6 @@
 
     </PreferenceCategory>
 
-
     <PreferenceCategory app:title="Clock Sound">
 
         <SwitchPreferenceCompat
@@ -72,6 +65,15 @@
             app:dependency="sound"
             app:key="volume"
             app:title="Sound Volume" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Reset">
+
+        <Preference
+            app:key="clear"
+            app:title="Reset to default"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 

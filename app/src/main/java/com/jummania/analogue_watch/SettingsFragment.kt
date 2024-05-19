@@ -55,17 +55,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     }.show()
             }
 
-            "clear" -> MaterialAlertDialogBuilder(requireContext()).setTitle("Warning!")
-                .setMessage("Are you sure to delete all cache?\nOnce delete you can't undo!")
-                .setPositiveButton(
-                    "Yes"
-                ) { _, _ ->
-
-                    preferenceManager.sharedPreferences?.edit()?.clear()?.apply()
-                    showMessage("All cache and history cleared successfully.")
-                }.setNegativeButton(
-                    "No"
-                ) { dialog, _ -> dialog?.dismiss() }.show()
+            "clear" -> {
+                preferenceManager.sharedPreferences?.edit()?.clear()?.apply()
+                showMessage("All Settings have been reset.")
+            }
 
 
             "share" -> startActivity(
