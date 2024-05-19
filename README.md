@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/Jumman04/Analogue-Watch/assets/113237846/3f20fe04-b294-424f-a2d8-a3fb16befc47" alt="App Icon" width="200">
+  <img src="https://github.com/Jumman04/Analogue-Watch/assets/113237846/f4f180ac-7145-4d21-822d-e0b9bfc4113e" alt="App Icon" width="222">
 </p>
 
   <h1 align="center">Analog Watch App</h1>
