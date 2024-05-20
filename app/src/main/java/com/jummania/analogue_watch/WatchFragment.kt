@@ -15,7 +15,6 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
@@ -46,9 +45,6 @@ class WatchFragment : Fragment() {
             val tik1 = getMediaPlayer(R.raw.tik1)
             val tik2 = getMediaPlayer(R.raw.tik2)
 
-            second.isVisible = getBoolean("secondHand")
-            minute.isVisible = getBoolean("minuteHand")
-            hour.isVisible = getBoolean("hourHand")
             val sound = getBoolean("sound")
 
             runnable = object : Runnable {
@@ -114,6 +110,15 @@ class WatchFragment : Fragment() {
                     }
                 }
             }
+
+            val secondHand = getBoolean("secondHand")
+            val minuteHand = getBoolean("minuteHand")
+            val hourHand = getBoolean("hourHand")
+
+            second.visibility(secondHand)
+            minute.visibility(minuteHand)
+            hour.visibility(hourHand)
+            circle.visibility(secondHand || minuteHand || hourHand)
         }
 
         setHasOptionsMenu(true)
@@ -181,5 +186,10 @@ class WatchFragment : Fragment() {
 
     private fun getBoolean(key: String): Boolean {
         return preferenceManager.getBoolean(key, true)
+    }
+
+    private fun View.visibility(boolean: Boolean) {
+        animate().alpha(1f - alpha)
+            .withEndAction { visibility = if (boolean) View.VISIBLE else View.GONE }.start()
     }
 }
