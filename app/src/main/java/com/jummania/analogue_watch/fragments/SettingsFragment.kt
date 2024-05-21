@@ -13,6 +13,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.jummania.analogue_watch.R
 
+
 class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -64,6 +65,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             "clear" -> {
                 preferenceManager.sharedPreferences?.edit()?.clear()?.apply()
                 showMessage("All Settings have been reset.")
+                activity?.recreate()
             }
 
 
