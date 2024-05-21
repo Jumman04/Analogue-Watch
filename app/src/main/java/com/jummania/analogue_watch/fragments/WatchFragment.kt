@@ -86,15 +86,12 @@ class WatchFragment : Fragment() {
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
             }
 
-            val color = getColor(android.R.attr.textColorPrimary, Color.BLACK)
-
-            minuteBackground.setBackgroundColor(color)
-            hourBackground.setBackgroundColor(color)
-
             val hourMarker = getBoolean("hourMarker")
             val minuteMarker = getBoolean("minuteMarker")
             if (hourMarker || minuteMarker) {
+                val color = getColor(android.R.attr.textColorPrimary, Color.BLACK)
                 val redColor = getColor(R.attr.red, Color.RED)
+
 
                 val relativeLayoutParam = RelativeLayout.LayoutParams(
                     9, RelativeLayout.LayoutParams.MATCH_PARENT

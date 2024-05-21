@@ -48,11 +48,12 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <RelativeLayout
-                            android:id="@+id/hourBackground"
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1.1" />
+                            android:layout_weight="1.1"
+                            app:cardBackgroundColor="?android:textColorPrimary"
+                            app:strokeWidth="0dp" />
 
                     </LinearLayout>
 
@@ -67,11 +68,13 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <RelativeLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/minuteBackground"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1.1" />
+                            android:layout_weight="1.1"
+                            app:cardBackgroundColor="?android:textColorPrimary"
+                            app:strokeWidth="0dp" />
 
                     </LinearLayout>
 
@@ -85,11 +88,12 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <LinearLayout
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1.3"
-                            android:background="?red" />
+                            app:cardBackgroundColor="?red"
+                            app:strokeWidth="0dp" />
 
                     </LinearLayout>
 
