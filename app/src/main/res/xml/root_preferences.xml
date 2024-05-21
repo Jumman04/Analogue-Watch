@@ -22,18 +22,11 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
-            app:key="clockMarker"
-            app:title="@string/markers" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:dependency="clockMarker"
             app:key="minuteMarker"
             app:title="@string/minute_markers_title" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
-            app:dependency="clockMarker"
             app:key="hourMarker"
             app:title="@string/hour_markers_title" />
 

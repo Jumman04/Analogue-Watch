@@ -86,7 +86,9 @@ class WatchFragment : Fragment() {
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
             }
 
-            if (getBoolean("clockMarker")) {
+            val hourMarker = getBoolean("hourMarker")
+            val minuteMarker = getBoolean("minuteMarker")
+            if (hourMarker || minuteMarker) {
                 val color = getColor(android.R.attr.textColorPrimary, Color.BLACK)
                 val redColor = getColor(R.attr.red, Color.RED)
 
@@ -96,33 +98,29 @@ class WatchFragment : Fragment() {
                 )
                 relativeLayoutParam.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
-                val hourMarker = getBoolean("hourMarker")
-                val minuteMarker = getBoolean("minuteMarker")
+                for (i in 1..60) {
+                    val divider = LinearLayout(requireContext())
 
-                if (hourMarker || minuteMarker) {
-                    for (i in 1..60) {
-                        val divider = LinearLayout(requireContext())
+                    divider.layoutParams = relativeLayoutParam
+                    divider.weightSum = 2f
+                    divider.rotation = 6f * i
+                    divider.orientation = LinearLayout.VERTICAL
 
-                        divider.layoutParams = relativeLayoutParam
-                        divider.weightSum = 2f
-                        divider.rotation = 6f * i
-                        divider.orientation = LinearLayout.VERTICAL
+                    val markers = LinearLayout(requireContext())
 
-                        val markers = LinearLayout(requireContext())
-
-                        if (i % 5 == 0 && hourMarker) {
-                            markers.setBackgroundColor(redColor)
-                            markers.setWeight(0.2f)
-                        } else if (minuteMarker) {
-                            markers.setBackgroundColor(color)
-                            markers.setWeight(0.1f)
-                        }
-
-                        divider.addView(markers)
-
-                        mainCircle.addView(divider)
+                    if (i % 5 == 0 && hourMarker) {
+                        markers.setBackgroundColor(redColor)
+                        markers.setWeight(0.2f)
+                    } else if (minuteMarker) {
+                        markers.setBackgroundColor(color)
+                        markers.setWeight(0.1f)
                     }
+
+                    divider.addView(markers)
+
+                    mainCircle.addView(divider)
                 }
+
             }
         }
 
