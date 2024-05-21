@@ -67,7 +67,7 @@ class WatchFragment : Fragment() {
 
                 relativeLayoutParam.width = (secondWidth * 0.8).toInt()
 
-                handLayout.setPadding(circleWidth.toInt())
+                handLayout.setPadding(width / 11)
 
                 if (frame) {
                     val padding = (circleWidth * 0.6f).toInt()
