@@ -8,10 +8,13 @@
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/mainFrame"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:neumorph_shapeAppearance="@style/NeumorphShapeAppearance"
         app:neumorph_shapeType="flat">
@@ -32,9 +35,11 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/handLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:elevation="4dp"
                     android:padding="22dp">
 
                     <LinearLayout
@@ -42,7 +47,6 @@
                         android:layout_width="9dp"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="99dp"
                         android:alpha="0"
                         android:elevation="3dp"
                         android:orientation="vertical"
@@ -62,7 +66,6 @@
                         android:layout_width="6dp"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="44dp"
                         android:alpha="0"
                         android:elevation="6dp"
                         android:orientation="vertical"
@@ -106,7 +109,7 @@
                         android:background="@drawable/circle_background"
                         android:backgroundTint="?android:textColorPrimary"
                         android:elevation="15dp"
-                        android:padding="7dp">
+                        android:padding="5dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"

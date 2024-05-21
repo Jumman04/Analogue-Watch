@@ -44,6 +44,38 @@ class WatchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+
+            val relativeLayoutParam = RelativeLayout.LayoutParams(
+                9, RelativeLayout.LayoutParams.MATCH_PARENT
+            )
+
+            val frame = getBoolean("frame")
+            handLayout.post {
+                mainFrame.visibility(true)
+                val width = handLayout.width - handLayout.paddingLeft - handLayout.paddingRight
+                minute.setHeight(width * 0.8f)
+                hour.setHeight(width * 0.6f)
+
+                val circleWidth = width / 14f
+                circle.setHeight(circleWidth)
+                circle.setWidth(circleWidth)
+
+                val secondWidth = circleWidth / 4
+                second.setWidth(secondWidth)
+                minute.setWidth(circleWidth / 3)
+                hour.setWidth(circleWidth / 2)
+
+                relativeLayoutParam.width = (secondWidth * 0.8).toInt()
+
+                handLayout.setPadding(circleWidth.toInt())
+
+                if (frame) {
+                    val padding = (circleWidth * 0.6f).toInt()
+                    mainFrame.setPadding(padding)
+                    secondFrame.setPadding(padding)
+                }
+            }
+
             val tik1 = getMediaPlayer(R.raw.tik1)
             val tik2 = getMediaPlayer(R.raw.tik2)
 
@@ -80,9 +112,12 @@ class WatchFragment : Fragment() {
             hour.visibility(hourHand)
             circle.visibility(secondHand || minuteHand || hourHand)
 
-            if (!getBoolean("frame")) {
+
+            if (!frame) {
                 mainFrame.setShadowElevation(0f)
                 secondFrame.setShadowElevation(0f)
+                mainFrame.setPadding(0)
+                secondFrame.setPadding(0)
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
             }
 
@@ -93,9 +128,6 @@ class WatchFragment : Fragment() {
                 val redColor = getColor(R.attr.red, Color.RED)
 
 
-                val relativeLayoutParam = RelativeLayout.LayoutParams(
-                    9, RelativeLayout.LayoutParams.MATCH_PARENT
-                )
                 relativeLayoutParam.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
                 for (i in 1..60) {
@@ -117,7 +149,6 @@ class WatchFragment : Fragment() {
                     }
 
                     divider.addView(markers)
-
                     mainCircle.addView(divider)
                 }
 
@@ -181,5 +212,17 @@ class WatchFragment : Fragment() {
 
     private fun View.visibility(boolean: Boolean) {
         animate().alpha(if (boolean) 1f else 0f).start()
+    }
+
+    private fun View.setHeight(height: Float) {
+        layoutParams = layoutParams.also { it.height = height.toInt() }
+    }
+
+    private fun View.setWidth(width: Float) {
+        layoutParams = layoutParams.also { it.width = width.toInt() }
+    }
+
+    private fun View.setPadding(padding: Int) {
+        setPadding(padding, padding, padding, padding)
     }
 }

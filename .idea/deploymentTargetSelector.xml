@@ -3,8 +3,8 @@
   <component name="deploymentTargetSelector">
     <selectionStates>
       <SelectionState runConfigName="app">
-        <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-05-21T04:23:01.677068749Z">
+        <option name="selectionMode" value="DIALOG" />
+        <DropdownSelection timestamp="2024-05-21T12:10:46.500848683Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=/home/jumman/.android/avd/Resizable_Experimental_API_34.avd" />
@@ -15,12 +15,12 @@
           <targets>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="PhysicalDevice" identifier="serial=NJGJ00701F49" />
+                <DeviceId pluginId="LocalEmulator" identifier="path=/home/jumman/.android/avd/Resizable_Experimental_API_34.avd" />
               </handle>
             </Target>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=/home/jumman/.android/avd/Resizable_Experimental_API_34.avd" />
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=NJGJ00701F49" />
               </handle>
             </Target>
           </targets>
