@@ -12,26 +12,13 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/clock_hands_title">
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:key="secondHand"
-            app:title="@string/second_hand_title" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:key="minuteHand"
-            app:title="@string/minute_hand_title" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:key="hourHand"
-            app:title="@string/hour_hand_title" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory app:title="@string/clock_display_title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="frame"
+            app:title="Clock Frame"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
@@ -49,6 +36,25 @@
             app:dependency="clockMarker"
             app:key="minuteMarker"
             app:title="@string/minute_markers_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/clock_hands_title">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="secondHand"
+            app:title="@string/second_hand_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="minuteHand"
+            app:title="@string/minute_hand_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="hourHand"
+            app:title="@string/hour_hand_title" />
 
     </PreferenceCategory>
 

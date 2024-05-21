@@ -1,4 +1,4 @@
-package com.jummania.analogue_watch
+package com.jummania.analogue_watch.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.jummania.analogue_watch.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 

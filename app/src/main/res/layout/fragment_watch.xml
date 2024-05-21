@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WatchFragment">
+    tools:context=".fragments.WatchFragment">
 
     <soup.neumorphism.NeumorphCardView
+        android:id="@+id/mainFrame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,6 +17,7 @@
         app:neumorph_shapeType="flat">
 
         <soup.neumorphism.NeumorphCardView
+            android:id="@+id/secondFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:neumorph_shapeAppearance="@style/NeumorphShapeAppearance"

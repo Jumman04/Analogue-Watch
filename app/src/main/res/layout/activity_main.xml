@@ -28,7 +28,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.jummania.analogue_watch.WatchFragment"
+        android:name="com.jummania.analogue_watch.fragments.WatchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />

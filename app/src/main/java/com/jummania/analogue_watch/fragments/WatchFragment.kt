@@ -1,4 +1,4 @@
-package com.jummania.analogue_watch
+package com.jummania.analogue_watch.fragments
 
 import android.graphics.Color
 import android.media.MediaPlayer
@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
+import com.jummania.analogue_watch.R
 import com.jummania.analogue_watch.databinding.FragmentWatchBinding
+import soup.neumorphism.NeumorphShapeAppearanceModel
 import java.util.Calendar
 
 
@@ -69,48 +71,6 @@ class WatchFragment : Fragment() {
 
             runnable?.let { handler.post(it) }
 
-
-            if (getBoolean("clockMarker")) {
-                val color = getColor(android.R.attr.textColorPrimary, Color.BLACK)
-                val redColor = getColor(R.attr.red, Color.RED)
-
-
-                val layoutParams = RelativeLayout.LayoutParams(
-                    9, RelativeLayout.LayoutParams.MATCH_PARENT
-                )
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
-
-                val hourMarker = getBoolean("hourMarker")
-                val minuteMarker = getBoolean("minuteMarker")
-
-                if (hourMarker || minuteMarker) {
-                    for (i in 1..60) {
-                        val divider = LinearLayout(requireContext())
-
-                        divider.layoutParams = layoutParams
-                        divider.weightSum = 2f
-                        divider.rotation = 6f * i
-                        divider.orientation = LinearLayout.VERTICAL
-
-                        val firstLinearLayout = getLayout()
-                        val secondLinearLayout = getLayout()
-
-                        if (i % 5 == 0 && hourMarker) {
-                            firstLinearLayout.setBackgroundColor(redColor)
-                            setWeight(firstLinearLayout, secondLinearLayout, 0.2f, 0.8f)
-                        } else if (minuteMarker) {
-                            firstLinearLayout.setBackgroundColor(color)
-                            setWeight(firstLinearLayout, secondLinearLayout, 0.1f, 0.9f)
-                        }
-
-                        divider.addView(firstLinearLayout)
-                        divider.addView(secondLinearLayout)
-
-                        mainCircle.addView(divider)
-                    }
-                }
-            }
-
             val secondHand = getBoolean("secondHand")
             val minuteHand = getBoolean("minuteHand")
             val hourHand = getBoolean("hourHand")
@@ -119,6 +79,51 @@ class WatchFragment : Fragment() {
             minute.visibility(minuteHand)
             hour.visibility(hourHand)
             circle.visibility(secondHand || minuteHand || hourHand)
+
+            if (!getBoolean("frame")) {
+                mainFrame.setShadowElevation(0f)
+                secondFrame.setShadowElevation(0f)
+                mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
+            }
+
+            if (getBoolean("clockMarker")) {
+                val color = getColor(android.R.attr.textColorPrimary, Color.BLACK)
+                val redColor = getColor(R.attr.red, Color.RED)
+
+
+                val relativeLayoutParam = RelativeLayout.LayoutParams(
+                    9, RelativeLayout.LayoutParams.MATCH_PARENT
+                )
+                relativeLayoutParam.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
+
+                val hourMarker = getBoolean("hourMarker")
+                val minuteMarker = getBoolean("minuteMarker")
+
+                if (hourMarker || minuteMarker) {
+                    for (i in 1..60) {
+                        val divider = LinearLayout(requireContext())
+
+                        divider.layoutParams = relativeLayoutParam
+                        divider.weightSum = 2f
+                        divider.rotation = 6f * i
+                        divider.orientation = LinearLayout.VERTICAL
+
+                        val markers = LinearLayout(requireContext())
+
+                        if (i % 5 == 0 && hourMarker) {
+                            markers.setBackgroundColor(redColor)
+                            markers.setWeight(0.2f)
+                        } else if (minuteMarker) {
+                            markers.setBackgroundColor(color)
+                            markers.setWeight(0.1f)
+                        }
+
+                        divider.addView(markers)
+
+                        mainCircle.addView(divider)
+                    }
+                }
+            }
         }
 
         setHasOptionsMenu(true)
@@ -139,22 +144,10 @@ class WatchFragment : Fragment() {
         return MaterialColors.getColor(requireContext(), color, defaultColor)
     }
 
-    private fun getLayout(): LinearLayout {
-        return LinearLayout(requireContext()).also {
-            it.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 0
-            )
-        }
-    }
-
-    private fun setWeight(
-        firstLinearLayout: LinearLayout,
-        secondLinearLayout: LinearLayout,
-        firstWeight: Float,
-        secondWeight: Float
-    ) {
-        (firstLinearLayout.layoutParams as LinearLayout.LayoutParams).weight = firstWeight
-        (secondLinearLayout.layoutParams as LinearLayout.LayoutParams).weight = secondWeight
+    private fun LinearLayout.setWeight(weight: Float) {
+        layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 0, weight
+        )
     }
 
     override fun onPause() {
@@ -189,7 +182,6 @@ class WatchFragment : Fragment() {
     }
 
     private fun View.visibility(boolean: Boolean) {
-        animate().alpha(1f - alpha)
-            .withEndAction { visibility = if (boolean) View.VISIBLE else View.GONE }.start()
+        animate().alpha(if (boolean) 1f else 0f).start()
     }
 }
