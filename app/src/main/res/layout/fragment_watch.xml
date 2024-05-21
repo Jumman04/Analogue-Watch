@@ -48,11 +48,11 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:id="@+id/hourBackground"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1.1"
-                            android:background="?android:textColorPrimary" />
+                            android:layout_weight="1.1" />
 
                     </LinearLayout>
 
@@ -67,11 +67,11 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:id="@+id/minuteBackground"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1.1"
-                            android:background="?android:textColorPrimary" />
+                            android:layout_weight="1.1" />
 
                     </LinearLayout>
 
