@@ -33,94 +33,83 @@
                 android:gravity="center"
                 android:padding="11dp">
 
+                <LinearLayout
+                    android:id="@+id/hour"
+                    android:layout_width="9dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:alpha="0"
+                    android:elevation="3dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/hourHand"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.1"
+                        app:strokeWidth="0dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/minute"
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:alpha="0"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/minuteHand"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.1"
+                        app:strokeWidth="0dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/second"
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:alpha="0"
+                    android:elevation="9dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/secondHand"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.3"
+                        app:strokeWidth="0dp" />
+
+                </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/handLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/circle"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerInParent="true"
-                    android:elevation="4dp">
-
-                    <LinearLayout
-                        android:id="@+id/hour"
-                        android:layout_width="9dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:alpha="0"
-                        android:elevation="3dp"
-                        android:orientation="vertical"
-                        android:weightSum="2">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/hourHand"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1.1"
-                            app:strokeWidth="0dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/minute"
-                        android:layout_width="6dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:alpha="0"
-                        android:elevation="6dp"
-                        android:orientation="vertical"
-                        android:weightSum="2">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/minuteHand"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1.1"
-                            app:strokeWidth="0dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/second"
-                        android:layout_width="4dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:alpha="0"
-                        android:elevation="9dp"
-                        android:orientation="vertical"
-                        android:weightSum="2">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/secondHand"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1.3"
-                            app:strokeWidth="0dp" />
-
-                    </LinearLayout>
+                    android:alpha="0"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="?android:textColorPrimary"
+                    android:elevation="15dp"
+                    android:padding="5dp">
 
                     <RelativeLayout
-                        android:id="@+id/circle"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_centerInParent="true"
-                        android:alpha="0"
                         android:background="@drawable/circle_background"
-                        android:backgroundTint="?android:textColorPrimary"
-                        android:elevation="15dp"
-                        android:padding="5dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/circle_background"
-                            android:backgroundTint="#C0C0C0"
-                            android:elevation="22dp" />
-
-                    </RelativeLayout>
+                        android:backgroundTint="#C0C0C0"
+                        android:elevation="22dp" />
 
                 </RelativeLayout>
-
 
             </RelativeLayout>
 

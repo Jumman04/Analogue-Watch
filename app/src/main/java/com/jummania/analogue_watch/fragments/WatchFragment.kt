@@ -103,9 +103,9 @@ class WatchFragment : Fragment() {
 
     private fun setResponsive(relativeLayoutParam: RelativeLayout.LayoutParams, frame: Boolean) {
         binding?.apply {
-            handLayout.post {
+            mainCircle.post {
                 mainFrame.visibility(true)
-                val width = handLayout.width - handLayout.paddingLeft - handLayout.paddingRight
+                val width = mainCircle.width - mainCircle.paddingLeft - mainCircle.paddingRight
 
                 second.setHeight(width * 0.8f)
                 minute.setHeight(width * 0.7f)
@@ -148,6 +148,7 @@ class WatchFragment : Fragment() {
                     divider.weightSum = 2f
                     divider.rotation = 6f * i
                     divider.orientation = LinearLayout.VERTICAL
+                    divider.elevation = 0f
 
                     val markers = LinearLayout(requireContext())
 
