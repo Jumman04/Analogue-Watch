@@ -39,8 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:elevation="4dp"
-                    android:padding="22dp">
+                    android:elevation="4dp">
 
                     <LinearLayout
                         android:id="@+id/hour"

@@ -44,61 +44,39 @@ class WatchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val relativeLayoutParam = RelativeLayout.LayoutParams(
+            9, RelativeLayout.LayoutParams.MATCH_PARENT
+        )
+
+        val frame = getBoolean("frame")
+
+        setResponsive(relativeLayoutParam, frame)
+
+        val primaryColor = getColor("primaryColor", "#1D1B20")
+        val secondaryColor = getColor("secondaryColor", "#C90000")
+
+        setColor(primaryColor, secondaryColor)
+
+        startClock()
+
+        visibility(frame)
+
+        createMarker(relativeLayoutParam, primaryColor, secondaryColor)
+
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity?)?.supportActionBar?.let {
+            it.title = "Analogue Watch"
+            it.setDisplayHomeAsUpEnabled(false)
+        }
+    }
+
+    private fun startClock() {
         binding?.apply {
-
-            val relativeLayoutParam = RelativeLayout.LayoutParams(
-                9, RelativeLayout.LayoutParams.MATCH_PARENT
-            )
-
-            val frame = getBoolean("frame")
-            handLayout.post {
-                mainFrame.visibility(true)
-                val width = handLayout.width - handLayout.paddingLeft - handLayout.paddingRight
-                minute.setHeight(width * 0.8f)
-                hour.setHeight(width * 0.6f)
-
-                val circleWidth = width / 14f
-                circle.setHeight(circleWidth)
-                circle.setWidth(circleWidth)
-
-                val secondWidth = circleWidth / 4
-                second.setWidth(secondWidth)
-                minute.setWidth(circleWidth / 3)
-                hour.setWidth(circleWidth / 2)
-
-                relativeLayoutParam.width = (secondWidth * 0.8).toInt()
-
-                handLayout.setPadding(width / 11)
-
-                if (frame) {
-                    val padding = (circleWidth * 0.6f).toInt()
-                    mainFrame.setPadding(padding)
-                    secondFrame.setPadding(padding)
-                }
-            }
-
-            val backgroundColor = getColor("backgroundColor", "#FEF7FF")
-            val primaryColor = getColor("primaryColor", "#1D1B20")
-            val secondaryColor = getColor("secondaryColor", "#C90000")
-
-            root.setBackgroundColor(backgroundColor)
-            secondHand.setBackgroundColor(secondaryColor)
-            minuteHand.setBackgroundColor(primaryColor)
-            hourHand.setBackgroundColor(primaryColor)
-
-            val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
-            val lighterColor = ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
-            mainFrame.setShadowColorDark(darkerColor)
-            mainFrame.setShadowColorLight(lighterColor)
-            secondFrame.setShadowColorDark(darkerColor)
-            secondFrame.setShadowColorLight(lighterColor)
-
             val tik1 = getMediaPlayer(R.raw.tik1)
             val tik2 = getMediaPlayer(R.raw.tik2)
-
             val sound = getBoolean("sound")
 
-            runnable = object : Runnable {
+            if (runnable == null) runnable = object : Runnable {
                 override fun run() {
 
                     val calendar = Calendar.getInstance()
@@ -117,27 +95,46 @@ class WatchFragment : Fragment() {
                     handler.postDelayed(this, 1000)
                 }
             }
-
             runnable?.let { handler.post(it) }
-
-            val secondHand = getBoolean("secondHand")
-            val minuteHand = getBoolean("minuteHand")
-            val hourHand = getBoolean("hourHand")
-
-            second.visibility(secondHand)
-            minute.visibility(minuteHand)
-            hour.visibility(hourHand)
-            circle.visibility(secondHand || minuteHand || hourHand)
+        }
 
 
-            if (!frame) {
-                mainFrame.setShadowElevation(0f)
-                secondFrame.setShadowElevation(0f)
-                mainFrame.setPadding(0)
-                secondFrame.setPadding(0)
-                mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
+    }
+
+    private fun setResponsive(relativeLayoutParam: RelativeLayout.LayoutParams, frame: Boolean) {
+        binding?.apply {
+            handLayout.post {
+                mainFrame.visibility(true)
+                val width = handLayout.width - handLayout.paddingLeft - handLayout.paddingRight
+
+                second.setHeight(width * 0.8f)
+                minute.setHeight(width * 0.7f)
+                hour.setHeight(width * 0.6f)
+
+                val circleWidth = width / 14f
+                circle.setHeight(circleWidth)
+                circle.setWidth(circleWidth)
+
+                val secondWidth = circleWidth / 4
+                second.setWidth(secondWidth)
+                minute.setWidth(circleWidth / 3)
+                hour.setWidth(circleWidth / 2)
+
+                relativeLayoutParam.width = (secondWidth * 0.8).toInt()
+
+                if (frame) {
+                    val padding = (circleWidth * 0.6f).toInt()
+                    mainFrame.setPadding(padding)
+                    secondFrame.setPadding(padding)
+                }
             }
+        }
+    }
 
+    private fun createMarker(
+        relativeLayoutParam: RelativeLayout.LayoutParams, primaryColor: Int, secondaryColor: Int
+    ) {
+        binding?.apply {
             val hourMarker = getBoolean("hourMarker")
             val minuteMarker = getBoolean("minuteMarker")
             if (hourMarker || minuteMarker) {
@@ -168,11 +165,27 @@ class WatchFragment : Fragment() {
 
             }
         }
+    }
 
-        setHasOptionsMenu(true)
-        (activity as AppCompatActivity?)?.supportActionBar?.let {
-            it.title = "Analogue Watch"
-            it.setDisplayHomeAsUpEnabled(false)
+    private fun visibility(frame: Boolean) {
+        val secondHand = getBoolean("secondHand")
+        val minuteHand = getBoolean("minuteHand")
+        val hourHand = getBoolean("hourHand")
+
+        binding?.apply {
+            second.visibility(secondHand)
+            minute.visibility(minuteHand)
+            hour.visibility(hourHand)
+            circle.visibility(secondHand || minuteHand || hourHand)
+
+
+            if (!frame) {
+                mainFrame.setShadowElevation(0f)
+                secondFrame.setShadowElevation(0f)
+                mainFrame.setPadding(0)
+                secondFrame.setPadding(0)
+                mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
+            }
         }
     }
 
@@ -238,5 +251,22 @@ class WatchFragment : Fragment() {
 
     private fun View.setPadding(padding: Int) {
         setPadding(padding, padding, padding, padding)
+    }
+
+    private fun setColor(primaryColor: Int, secondaryColor: Int) {
+        binding?.apply {
+            val backgroundColor = getColor("backgroundColor", "#FEF7FF")
+            root.setBackgroundColor(backgroundColor)
+            secondHand.setBackgroundColor(secondaryColor)
+            minuteHand.setBackgroundColor(primaryColor)
+            hourHand.setBackgroundColor(primaryColor)
+
+            val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
+            val lighterColor = ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
+            mainFrame.setShadowColorDark(darkerColor)
+            mainFrame.setShadowColorLight(lighterColor)
+            secondFrame.setShadowColorDark(darkerColor)
+            secondFrame.setShadowColorLight(lighterColor)
+        }
     }
 }
