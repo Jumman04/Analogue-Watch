@@ -28,7 +28,7 @@ directly or build it from source. Here's a slight improvement for clarity:
 Get started with the Analog Watch App by choosing one of the following options:
 
 - **Download APK:** You can download the Analog Watch App directly from
-  the [APK](https://github.com/Jumman04/Analogue-Watch/releases/download/2.0/Analogue.Watch.apk).
+  the [APK](https://github.com/Jumman04/Analogue-Watch/releases/download/2.1/Analogue.Watch.apk).
 - **Build from Source:** Alternatively, you can build the app from the provided source code using
   Android Studio.
 
