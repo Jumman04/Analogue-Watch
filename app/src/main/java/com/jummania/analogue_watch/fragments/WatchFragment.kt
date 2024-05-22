@@ -15,9 +15,9 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.google.android.material.color.MaterialColors
 import com.jummania.analogue_watch.R
 import com.jummania.analogue_watch.databinding.FragmentWatchBinding
 import soup.neumorphism.NeumorphShapeAppearanceModel
@@ -27,11 +27,12 @@ import java.util.Calendar
 class WatchFragment : Fragment() {
 
     private var binding: FragmentWatchBinding? = null
-    private val handler = Handler(Looper.getMainLooper())
     private var runnable: Runnable? = null
+
     private val preferenceManager by lazy {
         PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
+    private val handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -75,6 +76,22 @@ class WatchFragment : Fragment() {
                     secondFrame.setPadding(padding)
                 }
             }
+
+            val backgroundColor = getColor("backgroundColor", "#FEF7FF")
+            val primaryColor = getColor("primaryColor", "#1D1B20")
+            val secondaryColor = getColor("secondaryColor", "#C90000")
+
+            root.setBackgroundColor(backgroundColor)
+            secondHand.setBackgroundColor(secondaryColor)
+            minuteHand.setBackgroundColor(primaryColor)
+            hourHand.setBackgroundColor(primaryColor)
+
+            val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
+            val lighterColor = ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
+            mainFrame.setShadowColorDark(darkerColor)
+            mainFrame.setShadowColorLight(lighterColor)
+            secondFrame.setShadowColorDark(darkerColor)
+            secondFrame.setShadowColorLight(lighterColor)
 
             val tik1 = getMediaPlayer(R.raw.tik1)
             val tik2 = getMediaPlayer(R.raw.tik2)
@@ -124,9 +141,6 @@ class WatchFragment : Fragment() {
             val hourMarker = getBoolean("hourMarker")
             val minuteMarker = getBoolean("minuteMarker")
             if (hourMarker || minuteMarker) {
-                val color = getColor(android.R.attr.textColorPrimary, Color.BLACK)
-                val redColor = getColor(R.attr.red, Color.RED)
-
 
                 relativeLayoutParam.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
@@ -141,10 +155,10 @@ class WatchFragment : Fragment() {
                     val markers = LinearLayout(requireContext())
 
                     if (i % 5 == 0 && hourMarker) {
-                        markers.setBackgroundColor(redColor)
+                        markers.setBackgroundColor(secondaryColor)
                         markers.setWeight(0.2f)
                     } else if (minuteMarker) {
-                        markers.setBackgroundColor(color)
+                        markers.setBackgroundColor(primaryColor)
                         markers.setWeight(0.1f)
                     }
 
@@ -169,8 +183,8 @@ class WatchFragment : Fragment() {
         }
     }
 
-    private fun getColor(color: Int, defaultColor: Int): Int {
-        return MaterialColors.getColor(requireContext(), color, defaultColor)
+    private fun getColor(key: String, defaultColor: String): Int {
+        return preferenceManager.getInt(key, Color.parseColor(defaultColor))
     }
 
     private fun LinearLayout.setWeight(weight: Float) {

@@ -11,8 +11,8 @@ android {
         applicationId = "com.jummania.analogue_watch"
         minSdk = 21
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0"
+        versionCode = 3
+        versionName = "2.1"
 
         resValue("string", "versionName", versionName.toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -47,4 +47,5 @@ dependencies {
     implementation(libs.material)
     implementation(libs.neumorphism)
     implementation(libs.androidx.preference)
+    implementation (libs.android.colorpickerpreference)
 }

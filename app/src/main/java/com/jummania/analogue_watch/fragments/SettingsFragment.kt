@@ -64,8 +64,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             "clear" -> {
                 preferenceManager.sharedPreferences?.edit()?.clear()?.apply()
-                showMessage("All Settings have been reset.")
                 activity?.recreate()
+                showMessage("All Settings have been reset.")
             }
 
 
