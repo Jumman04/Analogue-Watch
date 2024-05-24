@@ -1,27 +1,22 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
-    namespace = "com.jummania.analogue_watch"
+    namespace = "com.jummania"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.jummania.analogue_watch"
-        minSdk = 21
-        targetSdk = 34
-        versionCode = 3
-        versionName = "2.1"
+        minSdk = 16
 
-        resValue("string", "versionName", versionName.toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,18 +30,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.neumorphism)
-    implementation(libs.androidx.preference)
-    implementation (libs.android.colorpickerpreference)
-    implementation(project(":AnalogClock"))
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

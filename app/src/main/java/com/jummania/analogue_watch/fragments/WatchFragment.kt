@@ -76,7 +76,7 @@ class WatchFragment : Fragment() {
             val tik2 = getMediaPlayer(R.raw.tik2)
             val sound = getBoolean("sound")
 
-         runnable = object : Runnable {
+            runnable = object : Runnable {
                 override fun run() {
 
                     val calendar = Calendar.getInstance()
