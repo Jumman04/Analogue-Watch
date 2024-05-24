@@ -8,7 +8,7 @@ import android.media.MediaPlayer
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.FloatRange
-import androidx.annotation.RawRes
+import androidx.core.content.res.use
 import androidx.core.graphics.ColorUtils
 import java.util.Calendar
 import kotlin.math.cos
@@ -39,23 +39,102 @@ class AnalogClock @JvmOverloads constructor(
     private var hourHandColor = minuteMarkerColor
 
     private var minuteMarkerHeight = 0.05f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
     private var hourMarkerHeight = 0.1f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
 
     private var minuteMarker = true
     private var hourMarker = true
+    private var secondHand = true
+    private var minuteHand = true
+    private var hourHand = true
 
     private var secondHandHeight = 0.8f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
     private var minuteHandHeight = 0.6f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
     private var hourHandHeight = 0.5f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
 
     private var secondHandWidth = 0.02f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
     private var minuteHandWidth = 0.03f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
     private var hourHandWidth = 0.04f
+        set(value) {
+            field = if (value > 1.0f) value / 100.0f else value
+        }
 
     private var tik1 = getMediaPlayer(R.raw.tik1)
-    private var tik2 = getMediaPlayer(R.raw.tik2)
+        set(value) {
+            tik1.stop()
+            tik1.release()
+            field = value
+        }
     private var sound = true
-    private var volume = 1f
+    private var volume = 0.1f
+
+    init {
+        context.theme.obtainStyledAttributes(
+            attrs, R.styleable.AnalogClock, defStyleAttr, defStyleAttr
+        ).use {
+            setBackgroundColor(it.getInt(R.styleable.AnalogClock_background_color, backgroundColor))
+            setMarkerColor(
+                it.getColor(
+                    R.styleable.AnalogClock_minute_marker_color, minuteMarkerColor
+                ), it.getColor(R.styleable.AnalogClock_hour_marker_color, hourMarkerColor)
+            )
+            setHandColor(
+                it.getColor(R.styleable.AnalogClock_second_hand_color, secondHandColor),
+                it.getColor(R.styleable.AnalogClock_minute_hand_color, minuteHandColor),
+                it.getColor(R.styleable.AnalogClock_hour_hand_color, hourHandColor)
+            )
+            setMarkerHeight(
+                it.getFloat(
+                    R.styleable.AnalogClock_minute_marker_height, minuteMarkerHeight
+                ), it.getFloat(R.styleable.AnalogClock_hour_marker_height, hourMarkerHeight)
+            )
+            setHandHeight(
+                it.getFloat(R.styleable.AnalogClock_second_hand_height, secondHandHeight),
+                it.getFloat(R.styleable.AnalogClock_minute_hand_height, minuteHandHeight),
+                it.getFloat(R.styleable.AnalogClock_hour_hand_height, hourHandHeight)
+            )
+            setHandWidth(
+                it.getFloat(R.styleable.AnalogClock_second_hand_width, secondHandWidth),
+                it.getFloat(R.styleable.AnalogClock_minute_hand_width, minuteHandWidth),
+                it.getFloat(R.styleable.AnalogClock_hour_hand_width, hourHandWidth)
+            )
+            enableMarkers(
+                it.getBoolean(R.styleable.AnalogClock_minute_marker, minuteMarker),
+                it.getBoolean(R.styleable.AnalogClock_hour_marker, hourMarker)
+            )
+
+            enableHands(
+                it.getBoolean(R.styleable.AnalogClock_enable_second_hand, secondHand),
+                it.getBoolean(R.styleable.AnalogClock_enable_minute_hand, minuteHand),
+                it.getBoolean(R.styleable.AnalogClock_enable_hour_hand, hourHand)
+            )
+            enableSound(it.getBoolean(R.styleable.AnalogClock_enable_sound, sound))
+            setVolume(it.getFloat(R.styleable.AnalogClock_volume, volume))
+            setMediaPlayer(
+                it.getResourceId(R.styleable.AnalogClock_clock_sound, R.raw.tik1),
+            )
+        }
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -68,12 +147,14 @@ class AnalogClock @JvmOverloads constructor(
         createMarker(canvas)
         createHand(canvas)
 
-        val minSize = radius * 0.04f
-        val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
-        drawCircle(canvas, minSize, darkerColor)
-        drawCircle(
-            canvas, minSize / 2, ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
-        )
+        if (secondHand || minuteHand || hourHand) {
+            val minSize = radius * 0.04f
+            val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
+            drawCircle(canvas, minSize, darkerColor)
+            drawCircle(
+                canvas, minSize / 2, ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
+            )
+        }
         postInvalidateDelayed(1000)
 
     }
@@ -119,13 +200,11 @@ class AnalogClock @JvmOverloads constructor(
         val minutes = calendar.get(Calendar.MINUTE) + seconds / 60.0f
 
 
-        if (!tik1.isPlaying && !tik2.isPlaying && sound) {
-            if (seconds % 2 == 0) tik2.start()
-            else tik1.start()
+        if (!tik1.isPlaying && sound) {
+            tik1.start()
         }
 
-
-        createHand(
+        if (hourHand) createHand(
             canvas,
             radius * hourHandWidth,
             radius * hourHandHeight,
@@ -133,7 +212,8 @@ class AnalogClock @JvmOverloads constructor(
             hourHandColor,
             (calendar.get(Calendar.HOUR) + minutes / 60.0f) * 5
         )
-        createHand(
+
+        if (minuteHand) createHand(
             canvas,
             radius * minuteHandWidth,
             radius * minuteHandHeight,
@@ -141,7 +221,8 @@ class AnalogClock @JvmOverloads constructor(
             minuteHandColor,
             minutes
         )
-        createHand(
+
+        if (secondHand) createHand(
             canvas,
             radius * secondHandWidth,
             radius * secondHandHeight,
@@ -187,11 +268,7 @@ class AnalogClock @JvmOverloads constructor(
         return Color.parseColor(colorCode)
     }
 
-    private fun setBackgroundColor(colorCode: String) {
-        backgroundColor = getColor(colorCode)
-    }
-
-    private fun setMarkerColor(
+    fun setMarkerColor(
         minuteMarkerColor: Int = this.minuteMarkerColor, hourMarkerColor: Int = this.hourMarkerColor
     ) {
         this.minuteMarkerColor = minuteMarkerColor
@@ -222,11 +299,11 @@ class AnalogClock @JvmOverloads constructor(
         @FloatRange(from = 0.0, to = 1.0) hourHandWidth: Float = this.hourHandWidth
     ) {
         this.secondHandWidth = secondHandWidth
-        this.hourHandWidth = hourHandWidth
+        this.minuteHandWidth = minuteHandWidth
         this.hourHandWidth = hourHandWidth
     }
 
-    private fun setHandColor(
+    fun setHandColor(
         secondHandColor: Int = this.secondHandColor,
         minuteHandColor: Int = this.minuteHandColor,
         hourHandColor: Int = this.hourHandColor
@@ -236,22 +313,35 @@ class AnalogClock @JvmOverloads constructor(
         this.hourHandColor = hourHandColor
     }
 
-    private fun enableMarkers(
+    fun enableMarkers(
         minuteMarker: Boolean = this.minuteMarker, hourMarker: Boolean = this.hourMarker
     ) {
         this.minuteMarker = minuteMarker
         this.hourMarker = hourMarker
     }
 
-    private fun getMediaPlayer(@RawRes res: Int): MediaPlayer {
+    fun enableHands(
+        secondHand: Boolean = this.secondHand,
+        minuteHand: Boolean = this.minuteHand,
+        hourHand: Boolean = this.hourHand
+    ) {
+        this.secondHand = secondHand
+        this.minuteHand = minuteHand
+        this.hourHand = hourHand
+    }
+
+    private fun getMediaPlayer(res: Int): MediaPlayer {
         return MediaPlayer.create(context, res).also {
             it.setVolume(volume, volume)
         }
     }
 
-    fun setMediaPlayer(mediaPlayer1: MediaPlayer = tik1, mediaPlayer2: MediaPlayer = tik2) {
+    fun setMediaPlayer(mediaPlayer1: MediaPlayer) {
         tik1 = mediaPlayer1
-        tik2 = mediaPlayer2
+    }
+
+    fun setMediaPlayer(mediaPlayer1: Int) {
+        tik1 = getMediaPlayer(mediaPlayer1)
     }
 
     fun enableSound(boolean: Boolean) {
@@ -260,10 +350,13 @@ class AnalogClock @JvmOverloads constructor(
 
     fun setVolume(@FloatRange(from = 0.0, to = 1.0) volume: Float) {
         this.volume = volume
+        this.volume = if (volume > 1.0f) volume / 100.0f else volume
         tik1.setVolume(volume, volume)
-        tik2.setVolume(volume, volume)
     }
 
+    override fun setBackgroundColor(color: Int) {
+        backgroundColor = color
+    }
 }
 
 

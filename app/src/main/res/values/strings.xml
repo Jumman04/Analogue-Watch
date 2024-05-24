@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Analogue Watch</string>
+    <string name="app_name">Analog Clock</string>
 
     <string-array name="themes">
         <item>Light</item>

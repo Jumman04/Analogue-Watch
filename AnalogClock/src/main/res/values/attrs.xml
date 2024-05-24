@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AnalogClock">
+        <attr name="background_color" format="color" />
+        <attr name="minute_marker_color" format="color" />
+        <attr name="hour_marker_color" format="color" />
+        <attr name="second_hand_color" format="color" />
+        <attr name="minute_hand_color" format="color" />
+        <attr name="hour_hand_color" format="color" />
+        <attr name="minute_marker_height" format="float" />
+        <attr name="hour_marker_height" format="float" />
+        <attr name="minute_marker" format="boolean" />
+        <attr name="hour_marker" format="boolean" />
+        <attr name="second_hand_height" format="float" />
+        <attr name="minute_hand_height" format="float" />
+        <attr name="hour_hand_height" format="float" />
+        <attr name="second_hand_width" format="float" />
+        <attr name="minute_hand_width" format="float" />
+        <attr name="hour_hand_width" format="float" />
+        <attr name="enable_sound" format="boolean" />
+        <attr name="enable_second_hand" format="boolean" />
+        <attr name="enable_minute_hand" format="boolean" />
+        <attr name="enable_hour_hand" format="boolean" />
+        <attr name="volume" format="float" />
+        <attr name="clock_sound" format="reference" />
+    </declare-styleable>
+</resources>
