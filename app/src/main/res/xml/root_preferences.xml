@@ -19,6 +19,11 @@
             app:key="hourMarker"
             app:title="@string/hour_markers_title" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="hourMarkerText"
+            app:title="Hour Markers Text" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/clock_hands_title">
@@ -56,6 +61,11 @@
             android:defaultValue="#C90000"
             android:key="secondaryColor"
             android:title="Secondary Color" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="#000000"
+            android:key="textColor"
+            android:title="Text Color" />
 
     </PreferenceCategory>
 

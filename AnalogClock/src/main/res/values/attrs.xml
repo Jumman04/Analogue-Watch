@@ -1,27 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Custom attributes for the AnalogClock view -->
+
     <declare-styleable name="AnalogClock">
+
+        <!-- Background color of the AnalogClock -->
         <attr name="background_color" format="color" />
+
+        <!-- Color of minute markers on the clock face -->
         <attr name="minute_marker_color" format="color" />
+
+        <!-- Color of hour markers on the clock face -->
         <attr name="hour_marker_color" format="color" />
+
+        <!-- Color of the second hand -->
         <attr name="second_hand_color" format="color" />
+
+        <!-- Color of the minute hand -->
         <attr name="minute_hand_color" format="color" />
+
+        <!-- Color of the hour hand -->
         <attr name="hour_hand_color" format="color" />
+
+        <!-- Height of minute markers relative to the clock face radius (0.0 to 1.0) -->
         <attr name="minute_marker_height" format="float" />
+
+        <!-- Height of hour markers relative to the clock face radius (0.0 to 1.0) -->
         <attr name="hour_marker_height" format="float" />
+
+        <!-- Enable/disable display of minute markers -->
         <attr name="minute_marker" format="boolean" />
+
+        <!-- Enable/disable display of hour markers -->
         <attr name="hour_marker" format="boolean" />
+
+        <!-- Height of the second hand relative to the clock face radius (0.0 to 1.0) -->
         <attr name="second_hand_height" format="float" />
+
+        <!-- Height of the minute hand relative to the clock face radius (0.0 to 1.0) -->
         <attr name="minute_hand_height" format="float" />
+
+        <!-- Height of the hour hand relative to the clock face radius (0.0 to 1.0) -->
         <attr name="hour_hand_height" format="float" />
+
+        <!-- Width of the second hand relative to the clock face radius (0.0 to 1.0) -->
         <attr name="second_hand_width" format="float" />
+
+        <!-- Width of the minute hand relative to the clock face radius (0.0 to 1.0) -->
         <attr name="minute_hand_width" format="float" />
+
+        <!-- Width of the hour hand relative to the clock face radius (0.0 to 1.0) -->
         <attr name="hour_hand_width" format="float" />
+
+        <!-- Enable/disable ticking sound of the clock -->
         <attr name="enable_sound" format="boolean" />
+
+        <!-- Enable/disable display of the second hand -->
         <attr name="enable_second_hand" format="boolean" />
+
+        <!-- Enable/disable display of the minute hand -->
         <attr name="enable_minute_hand" format="boolean" />
+
+        <!-- Enable/disable display of the hour hand -->
         <attr name="enable_hour_hand" format="boolean" />
+
+        <!-- Volume level for the ticking sound (0.0 to 1.0) -->
         <attr name="volume" format="float" />
+
+        <!-- Sound file for the clock ticking -->
         <attr name="clock_sound" format="reference" />
+
+        <!-- Text size for hour numbers displayed on the clock face -->
+        <attr name="textSize" format="dimension" />
+
+        <!-- Font family for hour numbers -->
+        <attr name="fontFamily" format="string" />
+
+        <!-- Text color for hour numbers -->
+        <attr name="textColor" format="color" />
+
+        <!-- Enable/disable display of hour numbers on the clock face -->
+        <attr name="enable_hour_text" format="boolean" />
+
+        <!-- Text style for hour numbers (normal, bold, italic) -->
+        <attr name="textStyle">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
+
     </declare-styleable>
+
 </resources>

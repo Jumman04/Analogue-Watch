@@ -11,8 +11,8 @@ android {
         applicationId = "com.jummania.analogue_watch"
         minSdk = 21
         targetSdk = 34
-        versionCode = 3
-        versionName = "2.1"
+        versionCode = 4
+        versionName = "4.0"
 
         resValue("string", "versionName", versionName.toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -43,7 +43,6 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.neumorphism)
     implementation(libs.androidx.preference)

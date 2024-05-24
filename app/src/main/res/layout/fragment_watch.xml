@@ -31,7 +31,6 @@
                 android:id="@+id/clock"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:layout_margin="5dp" />
 
         </soup.neumorphism.NeumorphCardView>

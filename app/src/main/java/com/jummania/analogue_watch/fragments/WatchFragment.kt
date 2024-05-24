@@ -44,20 +44,20 @@ class WatchFragment : Fragment() {
             clock.setBackgroundColor(backgroundColor)
             clock.setMarkerColor(primaryColor, secondaryColor)
             clock.setHandColor(secondaryColor, primaryColor, primaryColor)
+            clock.setTextColor(getColor("textColor", "#000000"))
 
             clock.enableMarkers(getBoolean("minuteMarker"), getBoolean("hourMarker"))
             clock.enableHands(
                 getBoolean("secondHand"), getBoolean("minuteHand"), getBoolean("hourHand")
             )
+            clock.enableHourText(getBoolean("hourMarkerText"))
             clock.enableSound(getBoolean("sound"))
 
-            clock.setVolume(preferenceManager.getInt("volume", 1) / 100f)
+            clock.setVolume(preferenceManager.getInt("volume", 1) / 10f)
 
             if (!frame) {
                 mainFrame.setShadowElevation(0f)
                 secondFrame.setShadowElevation(0f)
-                mainFrame.setPadding(0)
-                secondFrame.setPadding(0)
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
             }
         }
@@ -76,10 +76,6 @@ class WatchFragment : Fragment() {
 
     private fun getBoolean(key: String): Boolean {
         return preferenceManager.getBoolean(key, true)
-    }
-
-    private fun View.setPadding(padding: Int) {
-        setPadding(padding, padding, padding, padding)
     }
 
     /*
