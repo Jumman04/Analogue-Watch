@@ -10,7 +10,7 @@
    <a href="https://github.com/Jumman04/Analogue-Watch/stargazers">
    <img src="https://img.shields.io/github/stars/Jumman04/Analogue-Watch"/>
    </a>
-   <a href="https://github.com/Jumman04/Analogue-Watch/LICENSE">
+   <a href="https://github.com/Jumman04/Analogue-Watch/blob/master/LICENSE.md">
    <img src="https://img.shields.io/github/license/Jumman04/Analogue-Watch"/></a>
 </p>
 <h1 align="center">Analog Clock Library</h1>
