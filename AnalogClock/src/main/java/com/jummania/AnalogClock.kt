@@ -7,6 +7,8 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -110,6 +112,19 @@ class AnalogClock @JvmOverloads constructor(
             tik1.release() // Release system resources associated with the MediaPlayer.
             field = value // Assign the new MediaPlayer to the property.
         }
+
+
+    /**
+     * Handler to manage the timing of the clock updates, running on the main UI thread.
+     */
+    private val handler = Handler(Looper.getMainLooper())
+
+
+    /**
+     * Runnable that defines the task to be repeatedly executed to update the clock.
+     */
+    private var runnable: Runnable? = null
+
 
     // Initialization block to apply custom attributes from XML
     init {
@@ -229,6 +244,24 @@ class AnalogClock @JvmOverloads constructor(
                 R.styleable.AnalogClock_textSize, textSize
             )
         }
+
+        // Define the Runnable that will handle the clock updates
+        runnable = object : Runnable {
+            override fun run() {
+                // Remove any pending posts of the Runnable from the message queue
+                removeCallbacks(this)
+                // Update the clock face by invalidating the view, causing a redraw
+                invalidate()
+                // Schedule the next redraw in 1000 milliseconds (1 second)
+                handler.postDelayed(this, 1000)
+            }
+        }
+
+        // If the runnable is not null, schedule the first redraw in 1000 milliseconds
+        runnable?.let {
+            handler.postDelayed(it, 1000)
+        }
+
     }
 
 
@@ -251,7 +284,7 @@ class AnalogClock @JvmOverloads constructor(
         createMarker(canvas)
 
         // Create and draw hands (hour, minute, and optionally second)
-        val shouldRedraw = createHand(canvas)
+        createHand(canvas)
 
         // If at least one hand is being drawn, add additional visual elements
         if (secondHand || minuteHand || hourHand) {
@@ -263,10 +296,25 @@ class AnalogClock @JvmOverloads constructor(
                 canvas, minSize / 2, ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
             )
         }
+    }
 
-        // If the clock is running (i.e., at least one hand is being drawn), schedule a redraw
-        if (shouldRedraw) {
-            postInvalidateDelayed(1000) // Redraw after 1 second
+
+    /**
+     * Called when the visibility of this view and its ancestors change.
+     * This is used to start or stop the clock updates based on the view's visibility.
+     *
+     * @param isVisible True if this view and its ancestors are visible, false otherwise.
+     */
+    override fun onVisibilityAggregated(isVisible: Boolean) {
+        super.onVisibilityAggregated(isVisible)
+        if (isVisible) {
+            // If the view is visible, start the Runnable to update the clock every second
+            runnable?.let {
+                handler.postDelayed(it, 1000)
+            }
+        } else {
+            // If the view is not visible, remove any pending callbacks to stop updates
+            handler.removeCallbacksAndMessages(null)
         }
     }
 
@@ -376,13 +424,11 @@ class AnalogClock @JvmOverloads constructor(
      * @param canvas The canvas on which the clock hands will be drawn.
      * @return A boolean value indicating whether the clock should be redrawn.
      */
-    private fun createHand(canvas: Canvas): Boolean {
+    private fun createHand(canvas: Canvas) {
         val calendar = Calendar.getInstance()
 
         val seconds = calendar.get(Calendar.SECOND)
         val minutes = calendar.get(Calendar.MINUTE) + seconds / 60.0f
-
-        var shouldRedraw = false
 
         // Draw hour hand if enabled
         if (hourHand) {
@@ -408,17 +454,17 @@ class AnalogClock @JvmOverloads constructor(
             )
         }
 
-        // Update seconds and play ticking sound if necessary
-        if (this.seconds != seconds) {
-            this.seconds = seconds
-            if (!tik1.isPlaying && sound) {
-                tik1.start()
-            }
-            shouldRedraw = true
-        }
-
         // Draw second hand if enabled
         if (secondHand) {
+
+            // Update seconds and play ticking sound if necessary
+            if (this.seconds != seconds) {
+                this.seconds = seconds
+                if (!tik1.isPlaying && sound) {
+                    tik1.start()
+                }
+            }
+
             createHand(
                 canvas,
                 radius * secondHandWidth,
@@ -428,8 +474,6 @@ class AnalogClock @JvmOverloads constructor(
                 seconds.toFloat()
             )
         }
-
-        return shouldRedraw
     }
 
 

@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.annotation)
 }
 
 afterEvaluate {
@@ -43,7 +44,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId = "com.github.Jumman04"
                 artifactId = "Analogue-Watch"
-                version = "4.0"
+                version = "4.1"
 
                 afterEvaluate {
                     from(components["release"])
