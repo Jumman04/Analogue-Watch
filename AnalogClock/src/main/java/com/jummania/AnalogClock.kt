@@ -108,8 +108,8 @@ class AnalogClock @JvmOverloads constructor(
     private var tik1 =
         getMediaPlayer(R.raw.tik1) // MediaPlayer for playing the clock ticking sound.
         set(value) { // Setter for tik1 MediaPlayer.
-            tik1.stop() // Stop the currently playing sound.
-            tik1.release() // Release system resources associated with the MediaPlayer.
+            tik1?.stop() // Stop the currently playing sound.
+            tik1?.release() // Release system resources associated with the MediaPlayer.
             field = value // Assign the new MediaPlayer to the property.
         }
 
@@ -460,8 +460,8 @@ class AnalogClock @JvmOverloads constructor(
             // Update seconds and play ticking sound if necessary
             if (this.seconds != seconds) {
                 this.seconds = seconds
-                if (!tik1.isPlaying && sound) {
-                    tik1.start()
+                if (tik1?.isPlaying != true && sound) {
+                    tik1?.start()
                 }
             }
 
@@ -568,8 +568,8 @@ class AnalogClock @JvmOverloads constructor(
      * @param res The resource ID of the sound file to be played.
      * @return The MediaPlayer object.
      */
-    fun getMediaPlayer(res: Int): MediaPlayer {
-        return MediaPlayer.create(context, res).also {
+    fun getMediaPlayer(res: Int): MediaPlayer? {
+        return MediaPlayer.create(context, res)?.also {
             it.setVolume(volume, volume)
         }
     }
@@ -656,7 +656,7 @@ class AnalogClock @JvmOverloads constructor(
         // Ensure volume is within the valid range
         this.volume = if (volume > 1.0f) volume / 100.0f else volume
         // Set the volume for the ticking sound
-        tik1.setVolume(volume, volume)
+        tik1?.setVolume(volume, volume)
     }
 
 
@@ -725,20 +725,20 @@ class AnalogClock @JvmOverloads constructor(
     /**
      * Sets the MediaPlayer object used for playing clock ticking sound.
      *
-     * @param mediaPlayer1 The MediaPlayer object to be set.
+     * @param mediaPlayer The MediaPlayer object to be set.
      */
-    fun setMediaPlayer(mediaPlayer1: MediaPlayer) {
-        tik1 = mediaPlayer1
+    fun setMediaPlayer(mediaPlayer: MediaPlayer?) {
+        tik1 = mediaPlayer
     }
 
 
     /**
      * Sets the MediaPlayer object for playing clock ticking sound using the resource ID.
      *
-     * @param mediaPlayer1 The resource ID of the sound file to be played.
+     * @param res The resource ID of the sound file to be played.
      */
-    fun setMediaPlayer(mediaPlayer1: Int) {
-        tik1 = getMediaPlayer(mediaPlayer1)
+    fun setMediaPlayer(res: Int) {
+        tik1 = getMediaPlayer(res)
     }
 
 
