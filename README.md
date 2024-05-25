@@ -1,8 +1,23 @@
 <p align="center">
-  <img src="https://github.com/Jumman04/Analogue-Watch/assets/113237846/1efff827-143a-49b2-988c-4b059ac0d7fa" alt="App Icon" width="222">
+   <img src="https://github.com/Jumman04/Analogue-Watch/assets/113237846/1efff827-143a-49b2-988c-4b059ac0d7fa" alt="App Icon" width="222">
+   <br>
+   <img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
+   <a href="https://jitpack.io/#Jumman04/Analogue-Watch">
+   <img src="https://jitpack.io/v/Jumman04/Analogue-Watch.svg"/> </a>
+   <a href="https://github.com/Jumman04/Analogue-Watch/network/members">
+   <img src="https://img.shields.io/github/forks/Jumman04/Analogue-Watch"/>
+   </a>
+   <a href="https://github.com/Jumman04/Analogue-Watch/stargazers">
+   <img src="https://img.shields.io/github/stars/Jumman04/Analogue-Watch"/>
+   </a>
+   <a href="https://github.com/Jumman04/Analogue-Watch/LICENSE">
+   <img src="https://img.shields.io/github/license/Jumman04/Analogue-Watch"/></a>
+</p>
+<h1 align="center">Analog Clock Library</h1>
+</p>
 
 
-  <h1 align="center">Analog Clock Library</h1>
+
 
 
 Analog Clock Library is a customizable Android library for displaying time in a traditional analog format. It provides developers with a range of customization options to adjust various aspects such as hour markers, minute markers, hour indicator text, and clock hands (hour, minute, second) to suit their application's design.
@@ -135,3 +150,17 @@ analogClock.enableMarkers(minuteMarker = true, hourMarker = true)
 
 ```
 
+## Feature Requests
+
+If you have a feature request or a suggestion for improving this library, please feel free
+to [open an issue](https://github.com/Jumman04/Analogue-Watch/issues/new) and let us know! We
+appreciate your feedback and are always looking to make our library better.
+
+#### How to Request a Feature
+
+1. Click on the [Issues tab](https://github.com/Jumman04/Analogue-Watch/issues).
+2. Click the green "New Issue" button.
+3. Fill in the requested information and submit the issue.
+
+
+# Thank you for using and helping us improve the library!
