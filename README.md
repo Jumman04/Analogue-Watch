@@ -1,26 +1,26 @@
 <p align="center">
    <img src="https://github.com/Jumman04/Analogue-Watch/assets/113237846/1efff827-143a-49b2-988c-4b059ac0d7fa" alt="App Icon" width="222">
    <br>
-   <img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
+   <img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat" alt="API Level 17 and above"/>
    <a href="https://jitpack.io/#Jumman04/Analogue-Watch">
-   <img src="https://jitpack.io/v/Jumman04/Analogue-Watch.svg"/> </a>
+   <img src="https://jitpack.io/v/Jumman04/Analogue-Watch.svg" alt="JitPack Version"/>
+   </a>
    <a href="https://github.com/Jumman04/Analogue-Watch/network/members">
-   <img src="https://img.shields.io/github/forks/Jumman04/Analogue-Watch"/>
+   <img src="https://img.shields.io/github/forks/Jumman04/Analogue-Watch" alt="GitHub Forks"/>
    </a>
    <a href="https://github.com/Jumman04/Analogue-Watch/stargazers">
-   <img src="https://img.shields.io/github/stars/Jumman04/Analogue-Watch"/>
+   <img src="https://img.shields.io/github/stars/Jumman04/Analogue-Watch" alt="GitHub Stars"/>
    </a>
    <a href="https://github.com/Jumman04/Analogue-Watch/blob/master/LICENSE.md">
-   <img src="https://img.shields.io/github/license/Jumman04/Analogue-Watch"/></a>
+   <img src="https://img.shields.io/github/license/Jumman04/Analogue-Watch" alt="GitHub License"/>
+   </a>
 </p>
-<h1 align="center">Analog Clock Library</h1>
-</p>
 
 
-
-
-
-Analog Clock Library is a customizable Android library for displaying time in a traditional analog format. It provides developers with a range of customization options to adjust various aspects such as hour markers, minute markers, hour indicator text, and clock hands (hour, minute, second) to suit their application's design.
+Analog Clock Library is a customizable Android library for displaying time in a traditional analog
+format. It provides developers with a range of customization options to adjust various aspects such
+as hour markers, minute markers, hour indicator text, and clock hands (hour, minute, second) to suit
+their application's design.
 
 ---
 
@@ -35,7 +35,6 @@ Analog Clock Library is a customizable Android library for displaying time in a 
 
 ---
 
-
 ### Installation
 
 Add JitPack repository to your root build.gradle file:
@@ -49,22 +48,28 @@ allprojects {
     }
 }
 ```
+
 Step 2. Add the dependency
+
 ```groovy
-	dependencies {
-	        implementation 'com.github.Jumman04:Analogue-Watch:4.1'
-	}
+    dependencies {
+    implementation 'com.github.Jumman04:Analogue-Watch:4.1'
+}
 ```
 
 ---
 
 ## Usage in XML Layouts
+
 ```xml
-<com.jummania.AnalogClock
+
+<com.jummania.AnalogClock 
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 ```
+
 ## Usage in Programmatic
+
 ```java
 AnalogClock analogClock = new AnalogClock(this);
 ```
@@ -76,6 +81,7 @@ AnalogClock analogClock = new AnalogClock(this);
 Customize the appearance of the `AnalogClock` view by using the following XML attributes:
 
 ### Color Attributes
+
 - `background_color`: Background color of the clock face
 - `minute_marker_color`: Color of minute markers
 - `hour_marker_color`: Color of hour markers
@@ -85,17 +91,20 @@ Customize the appearance of the `AnalogClock` view by using the following XML at
 - `textColor`: Text color for hour indicator text
 
 ### Dimension Attributes
+
 - `minute_marker_height`: Height of minute markers
 - `hour_marker_height`: Height of hour markers
 - `textSize`: Text size for hour indicator text
 
 ### Boolean Attributes
+
 - `minute_marker`: Enable/disable display of minute markers
 - `hour_marker`: Enable/disable display of hour markers
 - `enable_sound`: Enable/disable ticking sound effects
 - `enable_hour_text`: Enable/disable display of hour indicator text
 
 ### Text Attributes
+
 - `fontFamily`: Font family for hour indicator text
 
 ---
@@ -103,38 +112,37 @@ Customize the appearance of the `AnalogClock` view by using the following XML at
 ## Example XML usage with attributes:
 
 ```xml
-<com.jummania.AnalogClock
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
 
-    app:background_color="@color/white"
+<com.jummania.AnalogClock 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    app:background_color="@color/white" 
     app:minute_marker_color="@color/gray"
-    app:hour_marker_color="@color/black"
+    app:hour_marker_color="@color/black" 
     app:second_hand_color="@color/red"
-    app:minute_hand_color="@color/blue"
+    app:minute_hand_color="@color/blue" 
     app:hour_hand_color="@color/green"
     app:textColor="@color/black"
-    
-    app:minute_marker_height="0.1"
-    app:hour_marker_height="0.15"
+
+    app:minute_marker_height="0.1" 
+    app:hour_marker_height="0.15" 
     app:textSize="14sp"
-    
-    app:minute_marker="true"
-    app:hour_marker="true"
+
+    app:minute_marker="true" 
+    app:hour_marker="true" 
     app:enable_sound="true"
     app:enable_hour_text="true"
-    
-    app:fontFamily="sans-serif"
-/>
+
+    app:fontFamily="sans-serif" />
 
 ```
 
 ## Programmatic Customization
-You can also customize the AnalogClock view programmatically:
-```java
-val analogClock = findViewById<AnalogClock>(R.id.analogClock)
 
-analogClock.setBackgroundColor(Color.WHITE)
+You can also customize the AnalogClock view programmatically:
+
+```ktx
+val analogClock = findViewById<AnalogClock> analogClock.setBackgroundColor(Color.WHITE)
 analogClock.setMarkerColor(minuteMarkerColor = Color.GRAY, hourMarkerColor = Color.BLACK)
 analogClock.setHandColor(secondHandColor = Color.RED, minuteHandColor = Color.BLUE, hourHandColor = Color.GREEN)
 
@@ -161,6 +169,5 @@ appreciate your feedback and are always looking to make our library better.
 1. Click on the [Issues tab](https://github.com/Jumman04/Analogue-Watch/issues).
 2. Click the green "New Issue" button.
 3. Fill in the requested information and submit the issue.
-
 
 # Thank you for using and contributing to the improvement of our library!

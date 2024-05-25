@@ -106,7 +106,7 @@ class AnalogClock @JvmOverloads constructor(
 
     // MediaPlayer Variable
     private var tik1 =
-        getMediaPlayer(R.raw.tik1) // MediaPlayer for playing the clock ticking sound.
+        getMediaPlayer(R.raw.sound) // MediaPlayer for playing the clock ticking sound.
         set(value) { // Setter for tik1 MediaPlayer.
             tik1?.stop() // Stop the currently playing sound.
             tik1?.release() // Release system resources associated with the MediaPlayer.
@@ -217,7 +217,7 @@ class AnalogClock @JvmOverloads constructor(
             // Set MediaPlayer
             setMediaPlayer(
                 typedArray.getResourceId(
-                    R.styleable.AnalogClock_clock_sound, R.raw.tik1
+                    R.styleable.AnalogClock_clock_sound, R.raw.sound
                 )
             )
             // Set Typeface
@@ -460,7 +460,7 @@ class AnalogClock @JvmOverloads constructor(
             // Update seconds and play ticking sound if necessary
             if (this.seconds != seconds) {
                 this.seconds = seconds
-                if (tik1?.isPlaying != true && sound) {
+                if (tik1?.isPlaying == false && sound) {
                     tik1?.start()
                 }
             }
