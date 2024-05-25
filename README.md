@@ -163,4 +163,4 @@ appreciate your feedback and are always looking to make our library better.
 3. Fill in the requested information and submit the issue.
 
 
-# Thank you for using and helping us improve the library!
+# Thank you for using and contributing to the improvement of our library!
