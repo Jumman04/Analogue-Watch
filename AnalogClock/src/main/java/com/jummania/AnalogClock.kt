@@ -310,7 +310,7 @@ class AnalogClock @JvmOverloads constructor(
         if (isVisible) {
             // If the view is visible, start the Runnable to update the clock every second
             runnable?.let {
-                handler.postDelayed(it, 1000)
+                handler.post(it)
             }
         } else {
             // If the view is not visible, remove any pending callbacks to stop updates
