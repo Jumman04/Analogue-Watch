@@ -14,8 +14,8 @@
    <a href="https://github.com/Jumman04/Analogue-Watch/blob/master/LICENSE.md">
    <img src="https://img.shields.io/github/license/Jumman04/Analogue-Watch" alt="GitHub License"/>
    </a>
-     <h1 align="center">Analog Clock Library</h1>
 </p>
+<h1 align="center">Analog Clock Library</h1>
 
 
 Analog Clock Library is a customizable Android library for displaying time in a traditional analog

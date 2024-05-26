@@ -1,6 +1,9 @@
 package com.jummania
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -100,6 +103,7 @@ class AnalogClock @JvmOverloads constructor(
     private var minuteHand = true // Flag to show/hide the minute hand.
     private var hourHand = true // Flag to show/hide the hour hand.
     private var sound = true // Flag to enable/disable clock ticking sound.
+    private var isReceiverAttached = false // Flag to track if the broadcast receiver is attached.
 
     // Typeface Variable
     private var typeface: Typeface? = null // Typeface for the clock text.
@@ -113,17 +117,27 @@ class AnalogClock @JvmOverloads constructor(
             field = value // Assign the new MediaPlayer to the property.
         }
 
-
-    /**
-     * Handler to manage the timing of the clock updates, running on the main UI thread.
-     */
+    // Handler to schedule periodic updates on the main thread
     private val handler = Handler(Looper.getMainLooper())
 
+    // Runnable that performs the update
+    private val updateRunnable = object : Runnable {
+        override fun run() {
+            removeCallbacks()
+            // Schedule the next update in 1000 milliseconds (1 second)
+            handler.postDelayed(this, 1000)
+            // Redraw the view to update the clock face
+            invalidate()
+        }
+    }
 
-    /**
-     * Runnable that defines the task to be repeatedly executed to update the clock.
-     */
-    private var runnable: Runnable? = null
+    // BroadcastReceiver to handle external intents
+    private val timeChangeReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            removeCallbacks()
+            updateRunnable.run()
+        }
+    }
 
 
     // Initialization block to apply custom attributes from XML
@@ -245,22 +259,8 @@ class AnalogClock @JvmOverloads constructor(
             )
         }
 
-        // Define the Runnable that will handle the clock updates
-        runnable = object : Runnable {
-            override fun run() {
-                // Remove any pending posts of the Runnable from the message queue
-                removeCallbacks(this)
-                // Update the clock face by invalidating the view, causing a redraw
-                invalidate()
-                // Schedule the next redraw in 1000 milliseconds (1 second)
-                handler.postDelayed(this, 1000)
-            }
-        }
-
-        // If the runnable is not null, schedule the first redraw in 1000 milliseconds
-        runnable?.let {
-            handler.postDelayed(it, 1000)
-        }
+        // Schedule the first redraw in 1000 milliseconds
+        handler.postDelayed(updateRunnable, 1000)
 
     }
 
@@ -307,15 +307,43 @@ class AnalogClock @JvmOverloads constructor(
      */
     override fun onVisibilityAggregated(isVisible: Boolean) {
         super.onVisibilityAggregated(isVisible)
+        removeCallbacks()
         if (isVisible) {
             // If the view is visible, start the Runnable to update the clock every second
-            runnable?.let {
-                handler.post(it)
-            }
-        } else {
-            // If the view is not visible, remove any pending callbacks to stop updates
-            handler.removeCallbacksAndMessages(null)
+            updateRunnable.run()
         }
+    }
+
+
+    /**
+     * Called when the view is attached to a window.
+     * This is where the view starts listening for time tick broadcasts.
+     * It registers the `timeChangeReceiver` if it is not already registered.
+     */
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (!isReceiverAttached) {
+            // Register the receiver to listen for time tick broadcasts
+            context?.registerReceiver(timeChangeReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
+            isReceiverAttached = true
+        }
+    }
+
+
+    /**
+     * Called when the view is detached from a window.
+     * This is where the view stops listening for time tick broadcasts.
+     * It unregisters the `timeChangeReceiver` if it is registered and removes any pending callbacks.
+     */
+    override fun onDetachedFromWindow() {
+        if (isReceiverAttached) {
+            // Unregister the receiver to stop listening for time tick broadcasts
+            context?.unregisterReceiver(timeChangeReceiver)
+            isReceiverAttached = false
+        }
+        // Remove any pending callbacks to avoid memory leaks
+        removeCallbacks()
+        super.onDetachedFromWindow()
     }
 
 
@@ -774,6 +802,23 @@ class AnalogClock @JvmOverloads constructor(
             TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics
         )
     }
+
+
+    /**
+     * Removes any pending callbacks and messages related to the updateRunnable from the message queue.
+     * This method ensures that no scheduled updates will occur after it is called.
+     */
+    private fun removeCallbacks() {
+        // Remove any pending posts of the updateRunnable from the message queue
+        removeCallbacks(updateRunnable)
+
+        // Remove any pending callbacks and messages with the specific updateRunnable
+        handler.removeCallbacksAndMessages(updateRunnable)
+
+        // Remove any pending callbacks and messages with no specific token (all messages)
+        handler.removeCallbacksAndMessages(null)
+    }
+
 
 }
 
