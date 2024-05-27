@@ -45,10 +45,6 @@ import kotlin.math.sin
  * into layout files and programmatic usage within activities or fragments. By utilizing the provided attributes
  * and methods, developers can create highly customizable and visually appealing clock displays tailored to
  * their application's requirements.
- *
- * @property context The context in which the view is created.
- * @property attrs The set of attributes defined in XML for customization.
- * @property defStyleAttr An attribute in the current theme that contains a reference to a style resource.
 <p>
  *  * Created by Jummania on 23,May,2024.
  *  * Email: sharifuddinjumman@gmail.com
@@ -59,7 +55,10 @@ class AnalogClock @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     // Paint and Rect Objects
-    private val paint = Paint() // Used for drawing shapes and text on the canvas.
+    private val paint = Paint().also {
+        // Set stroke cap to round
+        it.strokeCap = Paint.Cap.ROUND
+    }
     private val rect by lazy { Rect() } // Used for calculating the size and position of drawing elements.
 
     // Integer Variable
@@ -457,7 +456,7 @@ class AnalogClock @JvmOverloads constructor(
         }
 
         if (minuteHand || hourHand) {
-            // Draw the clock face
+            // Draw a circle if enabled
             drawCircle(canvas, radius * hourHandWidth * 1.1f, minuteHandColor)
         }
 
@@ -481,6 +480,7 @@ class AnalogClock @JvmOverloads constructor(
                 true
             )
 
+            // Draw a circle
             drawCircle(canvas, radius * secondHandWidth * 1.3f, secondHandColor)
         }
     }
@@ -492,9 +492,9 @@ class AnalogClock @JvmOverloads constructor(
      * @param canvas The canvas on which the clock hand will be drawn.
      * @param width The width of the clock hand.
      * @param height The height of the clock hand.
-     * @param extraLine The length of the extra line behind the center.
      * @param backgroundColor The background color of the clock hand.
      * @param angle The angle at which the clock hand will be drawn.
+     * * @param isSecondHand The hand is second Hand or not.
      */
     private fun createHand(
         canvas: Canvas,
@@ -771,7 +771,6 @@ class AnalogClock @JvmOverloads constructor(
     /**
      * Converts a size value from scaled pixels (SP) to pixels (PX).
      *
-     * @param value The size value in scaled pixels (SP).
      * @return The size value in pixels (PX).
      */
     private fun Float.toSP(): Float {

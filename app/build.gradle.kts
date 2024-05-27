@@ -11,8 +11,8 @@ android {
         applicationId = "com.jummania.analogue_watch"
         minSdk = 21
         targetSdk = 34
-        versionCode = 5
-        versionName = "4.1"
+        versionCode = 6
+        versionName = "4.2"
 
         resValue("string", "versionName", versionName.toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -23,8 +23,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -46,6 +45,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.neumorphism)
     implementation(libs.androidx.preference)
-    implementation (libs.android.colorpickerpreference)
+    implementation(libs.android.colorpickerpreference)
     implementation(project(":AnalogClock"))
 }

@@ -54,7 +54,7 @@ Step 2. Add the dependency
 
 ```groovy
     dependencies {
-    implementation 'com.github.Jumman04:Analogue-Watch:4.1'
+    implementation 'com.github.Jumman04:Analogue-Watch:4.2'
 }
 ```
 
