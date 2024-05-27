@@ -18,7 +18,6 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.core.content.res.use
-import androidx.core.graphics.ColorUtils
 import java.util.Calendar
 import kotlin.math.cos
 import kotlin.math.min
@@ -294,15 +293,6 @@ class AnalogClock @JvmOverloads constructor(
         createHand(canvas)
 
         // If at least one hand is being drawn, add additional visual elements
-        if (secondHand || minuteHand || hourHand) {
-            // Draw additional circles for aesthetic purposes
-            val minSize = radius * 0.04f
-            val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
-            drawCircle(canvas, minSize, darkerColor)
-            drawCircle(
-                canvas, minSize / 2, ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
-            )
-        }
     }
 
 
@@ -367,7 +357,7 @@ class AnalogClock @JvmOverloads constructor(
                     paint.color = hourMarkerColor // Set the color for hour markers
                     paint.strokeWidth = 5f // Set the stroke width for drawing lines
                     createMarker(canvas, radius * hourMarkerHeight, angle) // Draw hour marker
-                } else createMinuteMarker(canvas, angle) // Draw minute marker
+                } else createMarker(canvas, angle) // Draw minute marker
 
                 // Draw hour text if enabled
                 if (hourText) {
@@ -386,7 +376,7 @@ class AnalogClock @JvmOverloads constructor(
                     // Draw hour number on the canvas
                     canvas.drawText(hourText, textX.toFloat(), textY.toFloat(), paint)
                 }
-            } else createMinuteMarker(canvas, angle) // Draw minute marker
+            } else createMarker(canvas, angle) // Draw minute marker
         }
     }
 
@@ -397,7 +387,7 @@ class AnalogClock @JvmOverloads constructor(
      * @param canvas The Canvas on which the minute marker will be drawn.
      * @param angle The angle at which the minute marker will be drawn, in degrees.
      */
-    private fun createMinuteMarker(canvas: Canvas, angle: Float) {
+    private fun createMarker(canvas: Canvas, angle: Float) {
         if (minuteMarker) { // Draw minute marker if enabled
             paint.color = minuteMarkerColor // Set the color for minute markers
             paint.strokeWidth = 3f // Set the stroke width for drawing lines
@@ -438,6 +428,7 @@ class AnalogClock @JvmOverloads constructor(
      * @return A boolean value indicating whether the clock should be redrawn.
      */
     private fun createHand(canvas: Canvas) {
+        // Get the current time
         val calendar = Calendar.getInstance()
 
         val seconds = calendar.get(Calendar.SECOND)
@@ -449,7 +440,6 @@ class AnalogClock @JvmOverloads constructor(
                 canvas,
                 radius * hourHandWidth,
                 radius * hourHandHeight,
-                0.06f,
                 hourHandColor,
                 (calendar.get(Calendar.HOUR) + minutes / 60.0f) * 5
             )
@@ -461,15 +451,15 @@ class AnalogClock @JvmOverloads constructor(
                 canvas,
                 radius * minuteHandWidth,
                 radius * minuteHandHeight,
-                0.08f,
                 minuteHandColor,
                 minutes
             )
         }
 
-        val minSize = radius *minuteHandWidth
-        // Draw the clock face
-        drawCircle(canvas, minSize, minuteHandColor)
+        if (minuteHand || hourHand) {
+            // Draw the clock face
+            drawCircle(canvas, radius * hourHandWidth * 1.1f, minuteHandColor)
+        }
 
         // Draw second hand if enabled
         if (secondHand) {
@@ -486,10 +476,12 @@ class AnalogClock @JvmOverloads constructor(
                 canvas,
                 radius * secondHandWidth,
                 radius * secondHandHeight,
-                0.2f,
                 secondHandColor,
-                seconds.toFloat()
+                seconds.toFloat(),
+                true
             )
+
+            drawCircle(canvas, radius * secondHandWidth * 1.3f, secondHandColor)
         }
     }
 
@@ -508,31 +500,27 @@ class AnalogClock @JvmOverloads constructor(
         canvas: Canvas,
         width: Float,
         height: Float,
-        extraLine: Float,
         backgroundColor: Int,
-        angle: Float
+        angle: Float,
+        isSecondHand: Boolean = false
     ) {
         paint.color = backgroundColor // Set the color of the clock hand
         paint.strokeWidth = width // Set the width of the clock hand
-
         // Convert angle to radians
         val mAngle = Math.PI * angle / 30 - Math.PI / 2
 
-        // Calculate the end point of the clock hand
-        val endX = (centerX + cos(mAngle) * height).toFloat()
-        val endY = (centerY + sin(mAngle) * height).toFloat()
+        val angleX = (cos(mAngle) * height).toFloat()
+        val angleY = (sin(mAngle) * height).toFloat()
 
-        // Calculate the starting point of the line behind the center
-        val startX =
-            (centerX - cos(mAngle) * (height * extraLine)).toFloat() // Adjust the multiplier to control the length of the extra line
-        val startY =
-            (centerY - sin(mAngle) * (height * extraLine)).toFloat() // Adjust the multiplier to control the length of the extra line
-
-        // Draw the line behind the center
-        canvas.drawLine(centerX, centerY, startX, startY, paint)
+        if (isSecondHand) {
+            // Draw the line behind the center
+            canvas.drawLine(
+                centerX, centerY, centerX - angleX * 0.2f, centerY - angleY * 0.2f, paint
+            )
+        }
 
         // Draw the main clock hand
-        canvas.drawLine(centerX, centerY, endX, endY, paint)
+        canvas.drawLine(centerX, centerY, centerX + angleX, centerY + angleY, paint)
     }
 
 

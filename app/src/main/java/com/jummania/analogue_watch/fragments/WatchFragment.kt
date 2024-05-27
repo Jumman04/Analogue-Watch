@@ -59,7 +59,7 @@ class WatchFragment : Fragment() {
                 mainFrame.setShadowElevation(0f)
                 secondFrame.setShadowElevation(0f)
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
-            }
+            } else mainFrame.setBackgroundColor(backgroundColor)
         }
 
 
