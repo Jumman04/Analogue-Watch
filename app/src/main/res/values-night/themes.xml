@@ -1,5 +1,4 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AnalogueWatch" parent="Theme.Material3.DayNight.NoActionBar">
-    </style>
+
+    <style name="Base.Theme.AnalogueWatch" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>
