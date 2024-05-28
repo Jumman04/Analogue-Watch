@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.jummania.analogue_watch.R
@@ -59,7 +60,16 @@ class WatchFragment : Fragment() {
                 mainFrame.setShadowElevation(0f)
                 secondFrame.setShadowElevation(0f)
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
-            } else mainFrame.setBackgroundColor(backgroundColor)
+            } else {
+                val darkerColor = ColorUtils.blendARGB(backgroundColor, 0xFF000000.toInt(), 0.3f)
+                val lighterColor = ColorUtils.blendARGB(backgroundColor, 0xFFFFFFFF.toInt(), 0.3f)
+                mainFrame.setShadowColorDark(darkerColor)
+                mainFrame.setShadowColorLight(lighterColor)
+                secondFrame.setShadowColorDark(darkerColor)
+                secondFrame.setShadowColorLight(lighterColor)
+            }
+
+            root.setBackgroundColor(backgroundColor)
         }
 
 
@@ -79,8 +89,8 @@ class WatchFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         binding = null
+        super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
