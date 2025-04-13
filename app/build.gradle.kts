@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.jummania.analogue_watch"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.jummania.analogue_watch"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 6
         versionName = "4.2"
 
