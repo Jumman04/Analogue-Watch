@@ -64,8 +64,7 @@ Step 2. Add the dependency
 
 ```xml
 
-<com.jummania.AnalogClock 
-    android:layout_width="match_parent"
+<com.jummania.AnalogClock android:layout_width="match_parent"
     android:layout_height="match_parent" />
 ```
 
@@ -114,40 +113,22 @@ Customize the appearance of the `AnalogClock` view by using the following XML at
 
 ```xml
 
-<com.jummania.AnalogClock 
-    android:layout_width="match_parent" 
-    android:layout_height="match_parent"
-    app:background_color="@color/white" 
-    app:minute_marker_color="@color/gray"
-    app:hour_marker_color="@color/black"
-    app:textColor="@color/black"
-    app:second_hand_color="@color/red"
-    app:minute_hand_color="@color/blue" 
+<com.jummania.AnalogClock android:layout_width="match_parent" android:layout_height="match_parent"
+    app:background_color="@color/white" app:minute_marker_color="@color/gray"
+    app:hour_marker_color="@color/black" app:textColor="@color/black"
+    app:second_hand_color="@color/red" app:minute_hand_color="@color/blue"
     app:hour_hand_color="@color/green"
 
-    app:minute_marker_height="0.1" 
-    app:hour_marker_height="0.15" 
-    app:second_hand_height="0.9"
-    app:minute_hand_height="0.8"
-    app:hour_hand_height="0.7"
-    app:second_hand_width="0.02"
-    app:minute_hand_width="0.03"
-    app:hour_hand_width="0.04"
-    
-    app:minute_marker="true" 
-    app:hour_marker="true"
-    app:enable_hour_text="true"
-    app:enable_second_hand="true"
-    app:enable_minute_hand="true"
-    app:enable_hour_hand="true"
+    app:minute_marker_height="0.1" app:hour_marker_height="0.15" app:second_hand_height="0.9"
+    app:minute_hand_height="0.8" app:hour_hand_height="0.7" app:second_hand_width="0.02"
+    app:minute_hand_width="0.03" app:hour_hand_width="0.04"
+
+    app:minute_marker="true" app:hour_marker="true" app:enable_hour_text="true"
+    app:enable_second_hand="true" app:enable_minute_hand="true" app:enable_hour_hand="true"
     app:enable_sound="true"
 
-    app:volume="0.5"
-    app:clock_sound="@raw/ticking_sound"
-    app:textSize="14sp"
-    app:fontFamily="sans-serif" 
-    app:textStyle="normal"
-/>
+    app:volume="0.5" app:clock_sound="@raw/ticking_sound" app:textSize="14sp"
+    app:fontFamily="sans-serif" app:textStyle="normal" />
 
 
 ```
@@ -159,7 +140,11 @@ You can also customize the AnalogClock view programmatically:
 ```kt
 analogClock.setBackgroundColor(Color.WHITE)
 analogClock.setMarkerColor(minuteMarkerColor = Color.GRAY, hourMarkerColor = Color.BLACK)
-analogClock.setHandColor(secondHandColor = Color.RED, minuteHandColor = Color.BLUE, hourHandColor = Color.GREEN)
+analogClock.setHandColor(
+    secondHandColor = Color.RED,
+    minuteHandColor = Color.BLUE,
+    hourHandColor = Color.GREEN
+)
 analogClock.setTextColor(Color.BLACK)
 
 analogClock.setMarkerHeight(minuteMarkerHeight = 0.1f, hourMarkerHeight = 0.15f)
