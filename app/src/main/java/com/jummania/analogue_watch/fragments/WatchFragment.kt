@@ -56,7 +56,7 @@ class WatchFragment : Fragment() {
             clock.enableHourText(getBoolean("hourMarkerText"))
             clock.enableSound(getBoolean("sound"))
 
-            clock.setTextSize(preferenceManager.getInt("markerTextSize", 20).toFloat())
+            clock.setTextSize(preferenceManager.getInt("markerTextSize", 22).toFloat())
             clock.setVolume(preferenceManager.getInt("volume", 1) / 10f)
 
             if (!frame) {

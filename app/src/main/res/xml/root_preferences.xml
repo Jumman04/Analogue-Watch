@@ -25,7 +25,7 @@
             app:title="Hour Markers Text" />
 
         <SeekBarPreference
-            android:defaultValue="20"
+            android:defaultValue="22"
             android:max="100"
             app:dependency="hourMarkerText"
             app:key="markerTextSize"
