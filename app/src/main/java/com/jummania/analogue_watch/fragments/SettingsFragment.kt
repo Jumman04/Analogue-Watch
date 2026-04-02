@@ -1,13 +1,14 @@
 package com.jummania.analogue_watch.fragments
 
 import android.content.Intent
-import android.net.Uri
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,16 +27,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val version = preferenceScreen.findPreference<Preference>("version")
         version?.title = "Version: ${getString(R.string.versionName)}"
 
-        setHasOptionsMenu(true)
         (activity as AppCompatActivity?)?.supportActionBar?.let {
             it.title = "Settings"
             it.setDisplayHomeAsUpEnabled(true)
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) parentFragmentManager.popBackStack()
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
@@ -43,7 +38,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             "theme" -> {
                 val themes = resources.getStringArray(R.array.themes)
                 var position = themes.indexOf(
-                    preferenceManager.sharedPreferences?.getString(
+                    getSharedPreferences()?.getString(
                         "theme", "System default"
                     )
                 )
@@ -51,7 +46,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     .setPositiveButton("Ok") { _, _ ->
                         val theme = themes[position]
                         changeTheme(theme)
-                        preference.sharedPreferences?.edit()?.putString("theme", theme)?.apply()
+                        getSharedPreferences()?.edit {
+                            putString("theme", theme)
+                        }
                         preference.summary = theme
                     }.setNegativeButton("Cancel") { _, _ ->
 
@@ -63,7 +60,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
 
             "clear" -> {
-                preferenceManager.sharedPreferences?.edit()?.clear()?.apply()
+                getSharedPreferences()?.edit {
+                    clear()
+                }
                 activity?.recreate()
                 showMessage("All Settings have been reset.")
             }
@@ -86,8 +85,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun browseInternet(url: String) {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-        } catch (e: Exception) {
+            startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+        } catch (_: Exception) {
             showMessage("No app found to handle this request.")
         }
     }
@@ -104,5 +103,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             }
         )
+    }
+
+    private fun getSharedPreferences(): SharedPreferences? {
+        return preferenceManager?.sharedPreferences
     }
 }

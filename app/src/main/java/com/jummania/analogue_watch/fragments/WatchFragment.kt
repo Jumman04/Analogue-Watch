@@ -1,6 +1,5 @@
 package com.jummania.analogue_watch.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.toColorInt
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import com.jummania.analogue_watch.R
 import com.jummania.analogue_watch.databinding.FragmentWatchBinding
@@ -54,6 +56,7 @@ class WatchFragment : Fragment() {
             clock.enableHourText(getBoolean("hourMarkerText"))
             clock.enableSound(getBoolean("sound"))
 
+            clock.setTextSize(preferenceManager.getInt("markerTextSize", 20).toFloat())
             clock.setVolume(preferenceManager.getInt("volume", 1) / 10f)
 
             if (!frame) {
@@ -72,8 +75,20 @@ class WatchFragment : Fragment() {
             root.setBackgroundColor(backgroundColor)
         }
 
+        activity?.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+                menu.clear()
+                inflater.inflate(R.menu.menu, menu)
+            }
 
-        setHasOptionsMenu(true)
+            override fun onMenuItemSelected(item: MenuItem): Boolean {
+                if (item.itemId == R.id.settings) parentFragmentManager.beginTransaction()
+                    .setReorderingAllowed(true).addToBackStack(null)
+                    .replace(R.id.fragmentContainerView, SettingsFragment()).commit()
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         (activity as AppCompatActivity?)?.supportActionBar?.let {
             it.title = "Analogue Watch"
             it.setDisplayHomeAsUpEnabled(false)
@@ -81,7 +96,7 @@ class WatchFragment : Fragment() {
     }
 
     private fun getColor(key: String, defaultColor: String): Int {
-        return preferenceManager.getInt(key, Color.parseColor(defaultColor))
+        return preferenceManager.getInt(key, defaultColor.toColorInt())
     }
 
     private fun getBoolean(key: String): Boolean {
@@ -91,17 +106,5 @@ class WatchFragment : Fragment() {
     override fun onDestroy() {
         binding = null
         super.onDestroy()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.settings) parentFragmentManager.beginTransaction()
-            .setReorderingAllowed(true).addToBackStack(null)
-            .replace(R.id.fragmentContainerView, SettingsFragment()).commit()
-        return super.onOptionsItemSelected(item)
     }
 }

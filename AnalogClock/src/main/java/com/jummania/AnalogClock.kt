@@ -18,6 +18,7 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.core.content.res.use
+import androidx.core.graphics.toColorInt
 import java.util.Calendar
 import kotlin.math.cos
 import kotlin.math.min
@@ -46,7 +47,7 @@ import kotlin.math.sin
  * and methods, developers can create highly customizable and visually appealing clock displays tailored to
  * their application's requirements.
 <p>
- *  * Created by Jummania on 23,May,2024.
+ *  * Created by Jummania on 23, May 2024.
  *  * Email: sharifuddinjumman@gmail.com
  *  * Dhaka, Bangladesh.
  */
@@ -531,7 +532,7 @@ class AnalogClock @JvmOverloads constructor(
      * @return The integer representation of the color.
      */
     private fun getColor(colorCode: String): Int {
-        return Color.parseColor(colorCode)
+        return colorCode.toColorInt()
     }
 
 
