@@ -108,11 +108,11 @@ class AnalogClock @JvmOverloads constructor(
     private var typeface: Typeface? = null // Typeface for the clock text.
 
     // MediaPlayer Variable
-    private var tik1 =
+    private var tickSound =
         getMediaPlayer(R.raw.sound) // MediaPlayer for playing the clock ticking sound.
         set(value) { // Setter for tik1 MediaPlayer.
-            tik1?.stop() // Stop the currently playing sound.
-            tik1?.release() // Release system resources associated with the MediaPlayer.
+            tickSound?.stop() // Stop the currently playing sound.
+            tickSound?.release() // Release system resources associated with the MediaPlayer.
             field = value // Assign the new MediaPlayer to the property.
         }
 
@@ -265,9 +265,6 @@ class AnalogClock @JvmOverloads constructor(
             )
         }
 
-        // Schedule the first redraw in 1000 milliseconds
-        handler.postDelayed(updateRunnable, 1000)
-
     }
 
 
@@ -291,8 +288,6 @@ class AnalogClock @JvmOverloads constructor(
 
         // Create and draw hands (hour, minute, and optionally second)
         createHand(canvas)
-
-        // If at least one hand is being drawn, add additional visual elements
     }
 
 
@@ -467,8 +462,8 @@ class AnalogClock @JvmOverloads constructor(
             // Update seconds and play ticking sound if necessary
             if (this.seconds != seconds) {
                 this.seconds = seconds
-                if (tik1?.isPlaying == false && sound) {
-                    tik1?.start()
+                if (sound && tickSound?.isPlaying == false) {
+                    tickSound?.start()
                 }
             }
 
@@ -662,7 +657,7 @@ class AnalogClock @JvmOverloads constructor(
         // Ensure volume is within the valid range
         this.volume = if (volume > 1.0f) volume / 100.0f else volume
         // Set the volume for the ticking sound
-        tik1?.setVolume(volume, volume)
+        tickSound?.setVolume(volume, volume)
     }
 
 
@@ -734,7 +729,7 @@ class AnalogClock @JvmOverloads constructor(
      * @param mediaPlayer The MediaPlayer object to be set.
      */
     fun setMediaPlayer(mediaPlayer: MediaPlayer?) {
-        tik1 = mediaPlayer
+        tickSound = mediaPlayer
     }
 
 
@@ -744,7 +739,7 @@ class AnalogClock @JvmOverloads constructor(
      * @param res The resource ID of the sound file to be played.
      */
     fun setMediaPlayer(res: Int) {
-        tik1 = getMediaPlayer(res)
+        tickSound = getMediaPlayer(res)
     }
 
 
@@ -786,16 +781,8 @@ class AnalogClock @JvmOverloads constructor(
      * This method ensures that no scheduled updates will occur after it is called.
      */
     private fun removeCallbacks() {
-        // Remove any pending posts of the updateRunnable from the message queue
-        removeCallbacks(updateRunnable)
-
-        // Remove any pending callbacks and messages with the specific updateRunnable
-        handler.removeCallbacksAndMessages(updateRunnable)
-
-        // Remove any pending callbacks and messages with no specific token (all messages)
         handler.removeCallbacksAndMessages(null)
     }
-
 
 }
 
