@@ -71,7 +71,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             "share" -> startActivity(
                 Intent.createChooser(
                     Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(
-                        Intent.EXTRA_TEXT, "https://github.com/Jumman04/Analogue-Watch/apk.apk"
+                        Intent.EXTRA_TEXT,
+                        "https://github.com/Jumman04/Analogue-Watch/blob/master/release.apk"
                     ), "Share this App"
                 )
             )
