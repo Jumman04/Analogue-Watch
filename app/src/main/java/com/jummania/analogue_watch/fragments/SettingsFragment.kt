@@ -71,8 +71,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             "share" -> startActivity(
                 Intent.createChooser(
                     Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(
-                        Intent.EXTRA_TEXT,
-                        "বাংলাদেশী কবিতা প্রেমীদের জন্যে।\nএকসাথে একটি প্লাটফর্মে, সকল ক্ষ্যাতিমান কবিদের কবিতা শুনতে, আবৃতি করতে চাইলে এই অ্যাপসটি ডাউনলোড করুন।\n\nApp Link: https://play.google.com/store/apps/details?id=${requireActivity().packageName}"
+                        Intent.EXTRA_TEXT, "https://github.com/Jumman04/Analogue-Watch/apk.apk"
                     ), "Share this App"
                 )
             )

@@ -37,13 +37,11 @@ class WatchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val frame = getBoolean("frame")
-
-        val primaryColor = getColor("primaryColor", "#1D1B20")
-        val secondaryColor = getColor("secondaryColor", "#C90000")
-
         binding?.apply {
             val backgroundColor = getColor("backgroundColor", "#FEF7FF")
+            val primaryColor = getColor("primaryColor", "#1D1B20")
+            val secondaryColor = getColor("secondaryColor", "#C90000")
+
             clock.setBackgroundColor(backgroundColor)
             clock.setMarkerColor(primaryColor, secondaryColor)
             clock.setHandColor(secondaryColor, primaryColor, primaryColor)
@@ -59,7 +57,7 @@ class WatchFragment : Fragment() {
             clock.setTextSize(preferenceManager.getInt("markerTextSize", 22).toFloat())
             clock.setVolume(preferenceManager.getInt("volume", 1) / 10f)
 
-            if (!frame) {
+            if (!getBoolean("frame")) {
                 mainFrame.setShadowElevation(0f)
                 secondFrame.setShadowElevation(0f)
                 mainFrame.setShapeAppearanceModel(NeumorphShapeAppearanceModel.builder().build())
@@ -103,8 +101,8 @@ class WatchFragment : Fragment() {
         return preferenceManager.getBoolean(key, true)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         binding = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }
