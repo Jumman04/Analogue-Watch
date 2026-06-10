@@ -1,60 +1,136 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/clock_display_title">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:key="frame"
-            app:title="Clock Frame"
-            app:useSimpleSummaryProvider="true" />
+    <!-- ===================== -->
+    <!-- MARKERS -->
+    <!-- ===================== -->
+    <PreferenceCategory app:title="Marker">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="minuteMarker"
-            app:title="@string/minute_markers_title" />
+            app:title="Minute Marker" />
+
+        <SeekBarPreference
+            android:defaultValue="5"
+            android:max="100"
+            app:dependency="minuteMarker"
+            app:key="minuteMarkerHeight"
+            app:title="Minute Marker Height" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="hourMarker"
-            app:title="@string/hour_markers_title" />
+            app:title="Hour Marker" />
+
+        <SeekBarPreference
+            android:defaultValue="10"
+            android:max="100"
+            app:dependency="hourMarker"
+            app:key="hourMarkerHeight"
+            app:title="Hour Marker Height" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="hourMarkerText"
-            app:title="Hour Markers Text" />
+            app:title="Hour Marker Text" />
 
         <SeekBarPreference
             android:defaultValue="22"
             android:max="100"
+            android:min="10"
             app:dependency="hourMarkerText"
             app:key="markerTextSize"
-            app:min="20"
             app:showSeekBarValue="true"
-            app:title="Text Size" />
+            app:title="Marker Text Size" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/clock_hands_title">
+
+    <!-- ===================== -->
+    <!-- HANDS -->
+    <!-- ===================== -->
+    <PreferenceCategory app:title="Hands">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="secondHand"
-            app:title="@string/second_hand_title" />
+            app:title="Second Hand" />
+
+        <SeekBarPreference
+            android:defaultValue="80"
+            android:max="100"
+            app:dependency="secondHand"
+            app:key="secondHandHeight"
+            app:title="Second Hand Height" />
+
+        <SeekBarPreference
+            android:defaultValue="2"
+            android:max="100"
+            app:dependency="secondHand"
+            app:key="secondHandWidth"
+            app:title="Second Hand Width" />
+
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="minuteHand"
-            app:title="@string/minute_hand_title" />
+            app:title="Minute Hand" />
+
+        <SeekBarPreference
+            android:defaultValue="60"
+            android:max="100"
+            app:dependency="minuteHand"
+            app:key="minuteHandHeight"
+            app:title="Minute Hand Height" />
+
+        <SeekBarPreference
+            android:defaultValue="3"
+            android:max="100"
+            app:dependency="minuteHand"
+            app:key="minuteHandWidth"
+            app:title="Minute Hand Width" />
+
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="hourHand"
-            app:title="@string/hour_hand_title" />
+            app:title="Hour Hand" />
+
+        <SeekBarPreference
+            android:defaultValue="50"
+            android:max="100"
+            app:dependency="hourHand"
+            app:key="hourHandHeight"
+            app:title="Hour Hand Height" />
+
+        <SeekBarPreference
+            android:defaultValue="4"
+            android:max="100"
+            app:dependency="hourHand"
+            app:key="hourHandWidth"
+            app:title="Hour Hand Width" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Color">
+
+    <!-- ===================== -->
+    <!-- FRAME + APPEARANCE -->
+    <!-- ===================== -->
+    <PreferenceCategory app:title="Frame">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="frame"
+            app:title="Clock Frame" />
+
+    </PreferenceCategory>
+
+
+    <!-- ===================== -->
+    <!-- COLORS -->
+    <!-- ===================== -->
+    <PreferenceCategory app:title="Colors">
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:defaultValue="#FEF7FF"
@@ -69,7 +145,7 @@
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:defaultValue="#C90000"
             android:key="secondaryColor"
-            android:title="Secondary Color" />
+            android:title="Second Hand Color" />
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:defaultValue="#000000"
@@ -78,7 +154,11 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Clock Sound">
+
+    <!-- ===================== -->
+    <!-- SOUND -->
+    <!-- ===================== -->
+    <PreferenceCategory app:title="Sound">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
@@ -94,38 +174,40 @@
 
     </PreferenceCategory>
 
+
+    <!-- ===================== -->
+    <!-- RESET -->
+    <!-- ===================== -->
     <PreferenceCategory app:title="Reset">
 
         <Preference
             app:key="clear"
-            app:title="Reset to default"
-            app:useSimpleSummaryProvider="true" />
+            app:title="Reset to Default" />
 
     </PreferenceCategory>
 
+
+    <!-- ===================== -->
+    <!-- ABOUT -->
+    <!-- ===================== -->
     <PreferenceCategory app:title="About">
 
         <Preference
             app:key="website"
-            app:title="Website"
-            app:useSimpleSummaryProvider="true" />
+            app:title="Website" />
 
         <Preference
-            app:key="more"
-            app:title="More apps"
-            app:useSimpleSummaryProvider="true" />
-
+            app:key="more_apps"
+            app:title="More Apps" />
 
         <Preference
-            app:key="website"
-            app:title="About Developers"
-            app:useSimpleSummaryProvider="true" />
+            app:key="about"
+            app:title="About Developer" />
 
         <Preference
-            app:enabled="false"
+            android:enabled="false"
             app:key="version"
-            app:title="@string/versionName"
-            app:useSimpleSummaryProvider="true" />
+            app:title="@string/versionName" />
 
     </PreferenceCategory>
 

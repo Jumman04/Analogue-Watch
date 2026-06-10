@@ -57,6 +57,20 @@ class WatchFragment : Fragment() {
             clock.setTextSize(preferenceManager.getInt("markerTextSize", 22).toFloat())
             clock.setVolume(preferenceManager.getInt("volume", 1) / 10f)
 
+            clock.setMarkerHeight(
+                getFloat("minuteMarkerHeight", 5), getFloat("hourMarkerHeight", 10)
+            )
+            clock.setHandHeight(
+                getFloat("secondHandHeight", 80),
+                getFloat("minuteHandHeight", 60),
+                getFloat("hourHandHeight", 50)
+            )
+            clock.setHandWidth(
+                getFloat("secondHandWidth", 2),
+                getFloat("minuteHandWidth", 3),
+                getFloat("hourHandWidth", 4)
+            )
+
             if (!getBoolean("frame")) {
                 mainFrame.setShadowElevation(0f)
                 secondFrame.setShadowElevation(0f)
@@ -99,6 +113,10 @@ class WatchFragment : Fragment() {
 
     private fun getBoolean(key: String): Boolean {
         return preferenceManager.getBoolean(key, true)
+    }
+
+    private fun getFloat(key: String, value: Int): Float {
+        return preferenceManager.getInt(key, value).toFloat()
     }
 
     override fun onDestroyView() {
